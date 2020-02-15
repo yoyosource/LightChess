@@ -7,12 +7,16 @@ import java.awt.*;
 public class MenuStage implements Stage {
     @Override
     public void render(Graphics2D g) {
-        g.setColor(Color.black);
+        g.setColor(Color.gray);
         g.fillRect(0,0,800,600);
-        Font f = Font.getFont(Font.MONOSPACED);
-        g.setFont(f);
+        Font f = new Font("Old English Text MT", Font.PLAIN, 45);
         g.setColor(Color.orange);
-        g.drawString("Test", 10,20);
+        g.setFont(f);
+        g.setFont(new Font("Old English Text MT", Font.PLAIN, 45));
+        FontMetrics fm = g.getFontMetrics(f);
+        String str = "Light Chess";
+        int x = 400 - (fm.stringWidth(str) / 2);
+        g.drawString(str, x , 150);
     }
 
     @Override
