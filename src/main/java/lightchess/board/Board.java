@@ -20,4 +20,8 @@ public class Board {
         return new Board(s);
     }
 
+    public void move(Position from, Position to) {
+
+    }
+
 }
