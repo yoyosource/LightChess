@@ -1,5 +1,7 @@
 package lightchess;
 
+import lightchess.render.Draw;
+
 import javax.swing.*;
 
 public class LightChess {
