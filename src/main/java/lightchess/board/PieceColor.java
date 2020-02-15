@@ -15,4 +15,14 @@ public enum PieceColor {
         return b;
     }
 
+    @Override
+    public String toString() {
+        if (b == 0) {
+            return "W";
+        } else if (b == 1) {
+            return "B";
+        }
+        return "-";
+    }
+
 }

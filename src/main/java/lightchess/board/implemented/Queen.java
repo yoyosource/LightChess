@@ -23,4 +23,9 @@ public class Queen extends Piece {
     public void draw(Graphics2D g, int x, int y) {
 
     }
+
+    @Override
+    public String toString() {
+        return getColor().toString() + "Q";
+    }
 }

@@ -2,13 +2,27 @@ package lightchess.board;
 
 import lightchess.board.implemented.*;
 
+import java.util.Arrays;
+
 public class Board {
 
     private Piece[][] pieces = new Piece[8][8];
 
-    private String defaultBoard = "WR|WN|WB|WQ|WK|WB|WN|WR|WP|WP|WP|WP|WP|WP|WP|WP||||||||||||||||||||||||||||||||BP|BP|BP|BP|BP|BP|BP|BP|BR|BN|BB|BQ|BK|BB|BN|BR";
+    private String defaultBoard = "WR|WN|WB|WQ|WK|WB|WN|WR|WP|WP|WP|WP|WP|WP|WP|WP|||||||||||||||||||||||||||||||||BP|BP|BP|BP|BP|BP|BP|BP|BR|BN|BB|BQ|BK|BB|BN|BR";
+
+    public static void main(String[] args) {
+        createBoard();
+    }
 
     private Board() {
+        board(defaultBoard);
+    }
+
+    private Board(String s) {
+        board(s);
+    }
+
+    private void board(String s) {
         String[] strings = defaultBoard.split("\\|");
         if (strings.length != 64) {
             throw new IllegalArgumentException("Board is not 64 tiles big. (" + strings.length + ")");
@@ -18,13 +32,12 @@ public class Board {
             int y = (i - x) / 8;
             pieces[x][y] = getPiece(strings[i]);
         }
-    }
 
-    private Board(String s) {
-
+        System.out.println(toString());
     }
 
     private Piece getPiece(String s) {
+        s = s.trim();
         if (s.isEmpty()) {
             return null;
         }
@@ -55,14 +68,36 @@ public class Board {
         if (c == 'K') {
             return new King(color);
         }
+        if (c == 'P') {
+            return new Pawn(color);
+        }
         return null;
     }
 
-    public Board createBoard() {
+    @Override
+    public String toString() {
+        StringBuilder st = new StringBuilder();
+        for (int x = 0; x < pieces.length; x++) {
+            for (int y = 0; y < pieces[x].length; y++) {
+                if (!(x == 0 && y == 0)) {
+                    st.append("|");
+                }
+                if (pieces[y][x] == null) {
+                    st.append("  ");
+                } else {
+                    st.append(pieces[y][x].toString());
+                }
+            }
+            st.append("\n");
+        }
+        return st.toString().trim();
+    }
+
+    public static Board createBoard() {
         return new Board();
     }
 
-    public Board createBoard(String s) {
+    public static Board createBoard(String s) {
         return new Board(s);
     }
 
