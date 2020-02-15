@@ -2,8 +2,6 @@ package lightchess.board;
 
 import lightchess.board.implemented.*;
 
-import java.util.Arrays;
-
 public class Board {
 
     private Piece[][] pieces = new Piece[8][8];
@@ -88,7 +86,6 @@ public class Board {
                     st.append(pieces[y][x].toString());
                 }
             }
-            st.append("\n");
         }
         return st.toString().trim();
     }

@@ -1,0 +1,17 @@
+Protocol:
+
+TIME:TYPE:DATA
+
+Time -> Timestamp
+Type -> Connect | Disconnect | Move | Surrender | Request_Undo | Accept_Undo | Chat
+Data -> Connect: <NONE>
+        Disconnect: <NONE>
+        Move: <FROM> -> <TO>
+        Surrender: <NONE>
+        Request_Undo: <NONE>
+        Accept_Undo: <NONE>
+        Chat: <MESSAGE>
+
+<FROM> -> <X><Y>
+<TO>   -> <X><Y>
+<CHAT> -> <MESSAGE>
