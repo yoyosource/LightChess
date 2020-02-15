@@ -25,16 +25,15 @@ public class MenuStage implements Stage {
 
     @Override
     public void tick() {
-        System.out.println(ani);
-        if(way){
-            ani++;
-            if(ani > 255){
+        if (way) {
+            ani += 3;
+            if (ani > 255) {
                 ani = 255;
                 way = false;
             }
-        }else{
-            ani--;
-            if(ani < 100){
+        } else {
+            ani -= 1;
+            if (ani < 100) {
                 ani = 100;
                 way = true;
             }
