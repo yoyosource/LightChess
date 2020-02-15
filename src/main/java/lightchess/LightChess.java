@@ -1,12 +1,16 @@
 package lightchess;
 
 import lightchess.render.Draw;
+import lightchess.render.Stage;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LightChess {
 
     private static Draw draw = new Draw();
+    public static List<Stage> stages = new ArrayList<>();
 
     public static void main(String[] args) {
         JFrame jFrame = new JFrame();
@@ -19,12 +23,13 @@ public class LightChess {
         jFrame.setLocationRelativeTo(null);
 
         jFrame.setVisible(true);
-        jFrame.setContentPane(draw);
+        jFrame.add(draw);
         jFrame.validate();
 
         Runnable runnable = () -> {
             while (true) {
-                jFrame.repaint();
+                draw.tick();
+                draw.render();
                 try {
                     Thread.sleep(1000/60);
                 } catch (InterruptedException e) {
@@ -35,6 +40,10 @@ public class LightChess {
         Thread t = new Thread(runnable);
         t.setName("Renderer");
         t.start();
+    }
+
+    public static void initStages() {
+
     }
 
 }
