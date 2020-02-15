@@ -5,12 +5,16 @@ import lightchess.render.Stage;
 import java.awt.*;
 
 public class MenuStage implements Stage {
+
+    int ani = 255;
+    boolean way = false;
+
     @Override
     public void render(Graphics2D g) {
         g.setColor(Color.gray);
         g.fillRect(0,0,800,600);
         Font f = new Font("Old English Text MT", Font.PLAIN, 45);
-        g.setColor(Color.orange);
+        g.setColor(new Color(255,103,0 , ani));
         g.setFont(f);
         g.setFont(new Font("Old English Text MT", Font.PLAIN, 45));
         FontMetrics fm = g.getFontMetrics(f);
@@ -21,7 +25,20 @@ public class MenuStage implements Stage {
 
     @Override
     public void tick() {
-
+        System.out.println(ani);
+        if(way){
+            ani++;
+            if(ani > 255){
+                ani = 255;
+                way = false;
+            }
+        }else{
+            ani--;
+            if(ani < 100){
+                ani = 100;
+                way = true;
+            }
+        }
     }
 
     @Override
