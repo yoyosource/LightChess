@@ -7,6 +7,12 @@ public class Position {
     private int x;
     private int y;
 
+    private static boolean flip = false;
+
+    public static void setFlip(boolean flip) {
+        Position.flip = flip;
+    }
+
     public Position(int x, int y) {
         if (x < 0) {
             throw new IllegalArgumentException("Illegal position");
@@ -25,10 +31,16 @@ public class Position {
     }
 
     public int getX() {
+        if (!flip) {
+            return 7 - x;
+        }
         return x;
     }
 
     public int getY() {
+        if (!flip) {
+            return 7 - y;
+        }
         return y;
     }
 

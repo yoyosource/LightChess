@@ -4,6 +4,7 @@ import lightchess.LightChess;
 import lightchess.MouseInput;
 import lightchess.OptionManager;
 import lightchess.board.Board;
+import lightchess.board.Position;
 import lightchess.render.BordRenderer;
 import lightchess.render.Button;
 import lightchess.render.Stage;
@@ -25,6 +26,7 @@ public class OfflineStage implements Stage {
         if (board != null) {
             board.render(g, 350, 30);
         }
+        g.setColor(Color.GRAY);
 
         for (int i = 0; i < buttons.length; i++) {
             if (i == currentSelection) {
@@ -51,14 +53,25 @@ public class OfflineStage implements Stage {
             currentSelection = -1;
         }
         if (MouseInput.wasReleased(1)) {
-            System.out.println(currentSelection);
             if(currentSelection == 0){
                 LightChess.draw.setStage(0);
             }
             if(currentSelection == 1){
                 OptionManager.setOption("limitfps", !OptionManager.getoption("limitfps"));
             }
+        }
 
+        if (MouseInput.wasReleased(1)) {
+            int x = MouseInput.getX() - 350;
+            int y = MouseInput.getY() - 30;
+            x = x / 125;
+            y = y / 125;
+            try {
+                Position position = new Position(x, y);
+                board.click(position);
+            } catch (IllegalArgumentException e) {
+
+            }
         }
     }
 

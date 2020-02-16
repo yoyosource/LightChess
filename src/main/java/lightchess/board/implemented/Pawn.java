@@ -5,7 +5,6 @@ import lightchess.board.Piece;
 import lightchess.board.PieceColor;
 import lightchess.board.Position;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 

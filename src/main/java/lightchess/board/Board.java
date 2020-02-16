@@ -3,10 +3,14 @@ package lightchess.board;
 import lightchess.board.implemented.*;
 
 import java.awt.*;
+import java.util.List;
 
 public class Board {
 
     private Piece[][] pieces = new Piece[8][8];
+    private boolean flip = false;
+
+    private Position click = null;
 
     private String defaultBoard = "WR|WN|WB|WQ|WK|WB|WN|WR|WP|WP|WP|WP|WP|WP|WP|WP|||||||||||||||||||||||||||||||||BP|BP|BP|BP|BP|BP|BP|BP|BR|BN|BB|BQ|BK|BB|BN|BR";
 
@@ -86,17 +90,40 @@ public class Board {
     }
 
     public boolean isEmpty(int x, int y) {
-        return pieces[y][x].equals(new Piece(PieceColor.UNDEFINED));
+        return pieces[y][x].getColor() == PieceColor.UNDEFINED;
+    }
+
+    public void setFlip(boolean flip) {
+        this.flip = flip;
     }
 
     public void move(Position from, Position to) {
 
     }
 
+    public void click(Position click) {
+        Position.setFlip(flip);
+        if (pieces[click.getY()][click.getX()].getColor() == PieceColor.UNDEFINED) {
+            this.click = null;
+        }
+        this.click = click;
+    }
+
     public void render(Graphics2D g, int ix, int iy){
         for (int x = 0; x < pieces.length; x++) {
             for (int y = 0; y < pieces[x].length; y++) {
-                pieces[y][x].render(g, x * 125 + ix, y * 125 + iy);
+                if (!flip) {
+                    pieces[y][x].render(g, x * 125 + ix, ((pieces[x].length - 1) * 125 + iy * 2) - (y * 125 + iy));
+                } else {
+                    pieces[y][x].render(g, x * 125 + ix, y * 125 + iy);
+                }
+            }
+        }
+        if (click != null) {
+            List<Position> positions = pieces[click.getY()][click.getX()].possibilities(this, click.getX(), click.getY());
+            g.setColor(new Color(100, 200, 100, 100));
+            for (Position p : positions) {
+                g.fillRect(p.getX() * 125 + ix, p.getY() * 125 + iy, 125, 125);
             }
         }
     }
