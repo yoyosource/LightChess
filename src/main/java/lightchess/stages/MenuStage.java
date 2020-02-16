@@ -30,7 +30,9 @@ public class MenuStage implements Stage {
             FontMetrics fm = g.getFontMetrics(f);
             if(MouseInput.x >= 400 - fm.stringWidth(str) / 2){
                 if(MouseInput.x <= 400 + fm.stringWidth(str) / 2){
-                    if(MouseInput.y >= )
+                    if(MouseInput.y >= 0) {
+                        return;
+                    }
                 }
             }
         }

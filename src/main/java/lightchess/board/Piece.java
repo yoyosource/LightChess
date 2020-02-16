@@ -16,12 +16,17 @@ public class Piece {
         return color;
     }
 
-    public List<Position> possibilities(Board board) {
+    public List<Position> possibilities(Board board, int x, int y) {
         return new ArrayList<>();
     }
 
     public void draw(Graphics2D g, int x, int y) {
 
+    }
+
+    @Override
+    public String toString() {
+        return getColor().toString() + " ";
     }
 
 }

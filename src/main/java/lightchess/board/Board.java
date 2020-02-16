@@ -28,19 +28,18 @@ public class Board {
         for (int i = 0; i < strings.length; i++) {
             int x = i % 8;
             int y = (i - x) / 8;
-            pieces[x][y] = getPiece(strings[i]);
+            pieces[y][x] = getPiece(strings[i]);
         }
-
-        System.out.println(toString());
+        System.out.println(this);
     }
 
     private Piece getPiece(String s) {
         s = s.trim();
         if (s.isEmpty()) {
-            return null;
+            return new Piece(PieceColor.UNDEFINED);
         }
         if (s.length() != 2) {
-            return null;
+            return new Piece(PieceColor.UNDEFINED);
         }
         PieceColor color;
         if (s.charAt(0) == 'W') {
@@ -69,25 +68,11 @@ public class Board {
         if (c == 'P') {
             return new Pawn(color);
         }
-        return null;
+        return new Piece(PieceColor.UNDEFINED);
     }
 
-    @Override
-    public String toString() {
-        StringBuilder st = new StringBuilder();
-        for (int x = 0; x < pieces.length; x++) {
-            for (int y = 0; y < pieces[x].length; y++) {
-                if (!(x == 0 && y == 0)) {
-                    st.append("|");
-                }
-                if (pieces[y][x] == null) {
-                    st.append("  ");
-                } else {
-                    st.append(pieces[y][x].toString());
-                }
-            }
-        }
-        return st.toString().trim();
+    public Piece[][] getPieces() {
+        return pieces;
     }
 
     public static Board createBoard() {
@@ -98,8 +83,30 @@ public class Board {
         return new Board(s);
     }
 
+    public boolean isEmpty(int x, int y) {
+        return pieces[y][x].equals(new Piece(PieceColor.UNDEFINED));
+    }
+
     public void move(Position from, Position to) {
 
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder st = new StringBuilder();
+        for (int x = 0; x < pieces.length; x++) {
+            for (int y = 0; y < pieces[x].length; y++) {
+                if (!(x == 0 && y == 0)) {
+                    st.append("|");
+                }
+                if (pieces[x][y] == null) {
+                    st.append("  ");
+                } else {
+                    st.append(pieces[x][y].toString());
+                }
+            }
+        }
+        return st.toString().trim();
     }
 
 }

@@ -6,6 +6,7 @@ import lightchess.board.PieceColor;
 import lightchess.board.Position;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Pawn extends Piece {
@@ -15,8 +16,25 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public List<Position> possibilities(Board board) {
-        return super.possibilities(board);
+    public List<Position> possibilities(Board board, int x, int y) {
+        List<Position> positions = new ArrayList<>();
+        if (getColor() == PieceColor.WHITE) {
+            if (y == 1 && board.isEmpty(x , y + 2)) {
+                positions.add(new Position(x, y + 2));
+            }
+            if (board.isEmpty(x, y + 1)) {
+                positions.add(new Position(x, y + 1));
+            }
+        }
+        if (getColor() == PieceColor.BLACK) {
+            if (y == 6 && board.isEmpty(x , y - 2)) {
+                positions.add(new Position(x, y - 2));
+            }
+            if (board.isEmpty(x, y - 1)) {
+                positions.add(new Position(x, y - 1));
+            }
+        }
+        return positions;
     }
 
     @Override
