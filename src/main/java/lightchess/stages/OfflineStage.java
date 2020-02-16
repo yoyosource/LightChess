@@ -64,9 +64,9 @@ public class OfflineStage implements Stage {
 
     @Override
     public void start() {
-        board = Board.createBoard();
         buttons[0] = new Button(new Font("Old English Text MT", Font.PLAIN, 45),new Font("Old English Text MT", Font.PLAIN, 55),
                 new Color(255,103,0, 155), new Color(255,103,0), "←", 55, 87);
+        board = Board.createBoard();
     }
 
     @Override
