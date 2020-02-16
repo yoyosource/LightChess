@@ -93,9 +93,9 @@ public class ConnectStage implements Stage {
                     continue;
                 }
                 if(KeyInput.isKeyDown(KeyEvent.VK_SHIFT)){
-                    texts[textfield].setText(texts[textfield].getText() + KeyEvent.getKeyText(i).toUpperCase());
+                    texts[textfield].setText(texts[textfield].getText() + ((char)i + "").toUpperCase());
                 }else{
-                    texts[textfield].setText(texts[textfield].getText() + KeyEvent.getKeyText(i).toLowerCase());
+                    texts[textfield].setText(texts[textfield].getText() + ((char)i + "").toLowerCase());
                 }
 
             }
