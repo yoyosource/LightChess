@@ -212,17 +212,38 @@ public class Board {
             }
         }
 
-        checkCheck(g, ix, iy);
+        checkCheck(g, ix, iy, turn);
+        checkCheck(g, ix, iy, PieceColor.getColor((turn.getColor() + 1) % 2));
+
+        positionCalculator(g, ix, iy);
     }
 
-    private void checkCheck(Graphics2D g, int ix, int iy) {
-        Position king = getKing(turn);
+    private void positionCalculator(Graphics2D g, int ix, int iy) {
+        int whiteMaterial = calcMaterial(PieceColor.WHITE);
+        int blackMaterial = calcMaterial(PieceColor.BLACK);
+
+        g.setColor(new Color(75, 75, 75));
+        g.fillRect(350 - 30, iy, 25, 1000);
+
+        double factor = 12.8205128205;
+
+        g.setColor(Color.BLACK);
+        g.fillRect(350 - 28, iy + 2, 21, (int)(blackMaterial * factor));
+        g.setColor(Color.WHITE);
+        g.fillRect(350 - 28, 1000 + iy - 2 - (int)(whiteMaterial * factor), 21, (int)(whiteMaterial * factor));
+
+        g.setColor(new Color(100, 200, 100));
+        g.fillRect(350 - 28, 499 + iy, 21, 2);
+    }
+
+    private boolean checkCheck(Graphics2D g, int ix, int iy, PieceColor color) {
+        Position king = getKing(color);
         if (king == null) {
             turn = PieceColor.UNDEFINED;
-            return;
+            return false;
         }
         List<Position> available = pieces[king.getY()][king.getX()].possibilities(this, king.getX(), king.getY());
-        List<Position> attacked = attacked();
+        List<Position> attacked = attacked(color);
 
         if (available.isEmpty() && attacked.contains(king)) {
             //System.out.println("Checkmate?");
@@ -231,15 +252,40 @@ public class Board {
             g.setColor(new Color(200, 100, 100, 150));
             g.fillRect(king.getX() * 125 + ix, king.getY() * 125 + iy, 125, 125);
         }
+        return true;
     }
 
-    private List<Position> attacked() {
-        List<Position> coloredPieces = getColoredPieces(PieceColor.getColor((turn.getColor() + 1) % 2));
+    private List<Position> attacked(PieceColor color) {
+        List<Position> coloredPieces = getColoredPieces(PieceColor.getColor((color.getColor() + 1) % 2));
         List<Position> positions = new ArrayList<>();
         for (Position p : coloredPieces) {
             positions.addAll(pieces[p.getY()][p.getX()].possibilities(this, p.getX(), p.getY()));
         }
         return positions;
+    }
+
+    private int calcMaterial(PieceColor color) {
+        List<Position> coloredPieces = getColoredPieces(color);
+        int value = 0;
+        for (Position p : coloredPieces) {
+            char c = pieces[p.getY()][p.getX()].toString().charAt(1);
+            if (c == 'P') {
+                value++;
+            }
+            if (c == 'B') {
+                value += 3;
+            }
+            if (c == 'N') {
+                value += 3;
+            }
+            if (c == 'R') {
+                value += 5;
+            }
+            if (c == 'Q') {
+                value += 9;
+            }
+        }
+        return value;
     }
 
     @Override
