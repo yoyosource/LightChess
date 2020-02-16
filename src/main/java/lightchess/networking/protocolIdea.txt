@@ -2,16 +2,18 @@ Protocol:
 
 TIME:TYPE:DATA
 
-Time -> Timestamp
-Type -> Connect | Disconnect | Move | Surrender | Request_Undo | Accept_Undo | Chat
-Data -> Connect: <NONE>
-        Disconnect: <NONE>
-        Move: <FROM> -> <TO>
-        Surrender: <NONE>
-        Request_Undo: <NONE>
-        Accept_Undo: <NONE>
-        Chat: <MESSAGE>
+Time   -> Timestamp
+Type   -> Connect | Disconnect | Move | Surrender | Request_Undo | Accept_Undo | Chat | Sync_Board
+Data   -> Connect: <NONE>
+          Disconnect: <NONE>
+          Move: <FROM> -> <TO>
+          Surrender: <NONE>
+          Request_Undo: <NONE>
+          Accept_Undo: <NONE>
+          Chat: <MESSAGE>
+          Sync_Board: <BOARD>
 
-<FROM> -> <X><Y>
-<TO>   -> <X><Y>
-<CHAT> -> <MESSAGE>
+<FROM>  -> <X><Y>
+<TO>    -> <X><Y>
+<CHAT>  -> <MESSAGE>
+<BOARD> -> <BOARD_String>
