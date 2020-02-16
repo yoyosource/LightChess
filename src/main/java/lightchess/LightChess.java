@@ -25,7 +25,7 @@ public class LightChess {
         jFrame.setResizable(false);
         jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        jFrame.setSize(800, 600);
+        jFrame.setSize(1000, 700);
         jFrame.setLocationRelativeTo(null);
 
         jFrame.setVisible(true);

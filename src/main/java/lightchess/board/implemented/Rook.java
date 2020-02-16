@@ -15,8 +15,8 @@ public class Rook extends Piece {
     }
 
     @Override
-    public List<Position> possibilities(Board board) {
-        return super.possibilities(board);
+    public List<Position> possibilities(Board board, int x, int y) {
+        return super.possibilities(board, x, y);
     }
 
     @Override

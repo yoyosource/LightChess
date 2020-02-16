@@ -3,7 +3,9 @@ package lightchess.board;
 public enum PieceColor {
 
     WHITE(0),
-    BLACK(1);
+    BLACK(1),
+
+    UNDEFINED(-1);
 
     private int b;
 
@@ -22,7 +24,7 @@ public enum PieceColor {
         } else if (b == 1) {
             return "B";
         }
-        return "-";
+        return " ";
     }
 
 }
