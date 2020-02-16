@@ -44,9 +44,17 @@ public class Position {
         return y;
     }
 
-    public void flip() {
+    public void flipX() {
         x = 7 - x;
+    }
+
+    public void flipY() {
         y = 7 - y;
+    }
+
+    public void flip() {
+        flipX();
+        flipY();
     }
 
     public Position copy() {

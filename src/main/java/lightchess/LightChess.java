@@ -72,7 +72,7 @@ public class LightChess {
                 i++;
                 if(i > 60){
                     i = 0;
-                    System.out.println(frames);
+                    //System.out.println(frames);
                     frames = 0;
                 }
                 try {

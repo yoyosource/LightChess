@@ -1,6 +1,5 @@
 package lightchess.board;
 
-import jdk.nashorn.internal.runtime.Undefined;
 import lightchess.board.implemented.*;
 
 import java.awt.*;
@@ -101,11 +100,11 @@ public class Board {
     private boolean move(Position from, Position to) {
         List<Position> positions = pieces[from.getY()][from.getX()].possibilities(this, from.getX(), from.getY());
         to.flip();
-        System.out.println(from + " " + to + "  ->  " + positions);
         if (positions.contains(to)) {
-            from.flip();
+            from.flipX();
             Piece p = pieces[from.getY()][from.getX()];
             pieces[from.getY()][from.getX()] = new Piece(PieceColor.UNDEFINED);
+            to.flipY();
             pieces[to.getY()][to.getX()] = p;
             return true;
         }
