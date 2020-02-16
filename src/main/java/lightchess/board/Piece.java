@@ -1,5 +1,7 @@
 package lightchess.board;
 
+import lightchess.LightChess;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +22,8 @@ public class Piece {
         return new ArrayList<>();
     }
 
-    public void draw(Graphics2D g, int x, int y) {
-
+    public void render(Graphics2D g, int x, int y) {
+        g.drawImage(LightChess.resourceManager.getImage(this.toString()), x, y, null);
     }
 
     @Override

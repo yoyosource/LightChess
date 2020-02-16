@@ -63,10 +63,12 @@ public class MenuStage implements Stage {
         }
         if (MouseInput.wasReleased(1)) {
             System.out.println(currentSelection);
-            if(currentSelection == 3){
+            if(currentSelection == 4){
                 System.exit(0);
             }else if( currentSelection == 2){
                 LightChess.draw.setStage(1);
+            }else if( currentSelection == 0){
+                LightChess.draw.setStage(2);
             }
 
         }

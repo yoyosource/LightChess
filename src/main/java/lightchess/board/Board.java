@@ -2,6 +2,8 @@ package lightchess.board;
 
 import lightchess.board.implemented.*;
 
+import java.awt.*;
+
 public class Board {
 
     private Piece[][] pieces = new Piece[8][8];
@@ -107,6 +109,9 @@ public class Board {
             }
         }
         return st.toString().trim();
+    }
+    public void render(Graphics2D g){
+
     }
 
 }
