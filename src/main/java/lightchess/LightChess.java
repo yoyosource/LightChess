@@ -4,6 +4,7 @@ import lightchess.render.Draw;
 import lightchess.render.Stage;
 import lightchess.resourceManager.LoadingQueue;
 import lightchess.resourceManager.ResourceManager;
+import lightchess.stages.CreditStage;
 import lightchess.stages.MenuStage;
 import lightchess.stages.OfflineStage;
 import lightchess.stages.OptionsStage;
@@ -106,6 +107,7 @@ public class LightChess {
         stages.add(new MenuStage());
         stages.add(new OptionsStage());
         stages.add(new OfflineStage());
+        stages.add(new CreditStage());
     }
 
 }

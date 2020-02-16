@@ -4,8 +4,6 @@ import lightchess.KeyInput;
 import lightchess.LightChess;
 import lightchess.MouseInput;
 import lightchess.OptionManager;
-import lightchess.board.Board;
-import lightchess.board.Position;
 import lightchess.render.BordRenderer;
 import lightchess.render.Button;
 import lightchess.render.Stage;
@@ -13,23 +11,16 @@ import lightchess.render.Stage;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
-public class OfflineStage implements Stage {
+public class CreditStage implements Stage {
 
     private lightchess.render.Button[] buttons = new Button[1];
     private int currentSelection = -1;
-    private Board board;
 
     @Override
     public void render(Graphics2D g) {
         g.setColor(Color.GRAY);
 
         g.fillRect(0,0,1400,1100);
-        BordRenderer.renderBoard(g, 350, 30);
-        if (board != null) {
-            board.render(g, 350, 30);
-        }
-        g.setColor(Color.GRAY);
-
         for (int i = 0; i < buttons.length; i++) {
             if (i == currentSelection) {
                 buttons[i].setSelected(true);
@@ -39,11 +30,14 @@ public class OfflineStage implements Stage {
             buttons[i].render(g);
         }
         g.drawOval(50, 50, 50 ,50);
+
     }
 
     @Override
     public void tick() {
-
+        if(KeyInput.wasPressed(KeyEvent.VK_ESCAPE)){
+            LightChess.draw.setStage(0);
+        }
         boolean intersects = false;
         for (int i = 0; i < buttons.length; i++) {
             if (buttons[i].intersects(new Rectangle(MouseInput.getX(), MouseInput.getY(), 1,1))) {
@@ -63,31 +57,16 @@ public class OfflineStage implements Stage {
                 OptionManager.setOption("limitfps", !OptionManager.getoption("limitfps"));
             }
         }
-
-        if (MouseInput.wasReleased(1)) {
-            int x = MouseInput.getX() - 350;
-            int y = MouseInput.getY() - 30;
-            x = x / 125;
-            y = y / 125;
-            try {
-                Position position = new Position(x, y);
-                board.click(position);
-            } catch (IllegalArgumentException e) {
-
-            }
-        }
     }
 
     @Override
     public void start() {
         buttons[0] = new Button(new Font("Old English Text MT", Font.PLAIN, 45),new Font("Old English Text MT", Font.PLAIN, 55),
                 new Color(255,103,0, 155), new Color(255,103,0), "←", 55, 87);
-        board = Board.createBoard();
     }
 
     @Override
     public void end() {
 
     }
-
 }
