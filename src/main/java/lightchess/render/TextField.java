@@ -6,7 +6,7 @@ public class TextField extends Rectangle {
 
     private Font font;
     private Color color, textcolor;
-    private String text;
+    private String text = "", standarttext;
     private int boxx, boxy;
     private int widht, height1;
     private boolean selected;
@@ -15,11 +15,12 @@ public class TextField extends Rectangle {
         this.font = font;
         this.color = color;
         this.textcolor = textcolor;
-        this.text = text;
+        this.standarttext = text;
         this.boxx = boxx;
         this.boxy = boxy;
         this.widht = widht;
         this.height1 = height;
+        this.text = standarttext;
     }
 
     public void setText(String text) {
@@ -32,6 +33,10 @@ public class TextField extends Rectangle {
 
     public void setSelected(boolean selected) {
         this.selected = selected;
+    }
+
+    public String getStandarttext() {
+        return standarttext;
     }
 
     public void render(Graphics2D g){
