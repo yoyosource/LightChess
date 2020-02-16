@@ -18,8 +18,8 @@ public class MenuStage implements Stage {
     @Override
     public void render(Graphics2D g) {
         g.setColor(Color.gray);
-        g.fillRect(0,0,1000,700);
-        Fonts.string(g, new Font("Old English Text MT", Font.PLAIN, 70), new Color(255,103,0 , ani), "Light Chess", 150);
+        g.fillRect(0,0,1400,1100);
+        Fonts.string(g, new Font("Old English Text MT", Font.PLAIN, 100), new Color(255,103,0 , ani), "Light Chess", 150);
 
         for (int i = 0; i < options.length; i++) {
             if (i == currentSelection) {
@@ -28,6 +28,9 @@ public class MenuStage implements Stage {
                 options[i].setSelected(false);
             }
             options[i].render(g);
+        }
+        if(!LightChess.resourceManager.isLoading("BP")){
+            g.drawImage(LightChess.resourceManager.getImage("BP"), 100, 100, null);
         }
 
     }
@@ -72,14 +75,14 @@ public class MenuStage implements Stage {
 
     @Override
     public void start() {
-        options[0] = new Button(new Font("Old English Text MT", Font.PLAIN, 55),new Font("Old English Text MT", Font.PLAIN, 65),
-                new Color(255,103,0, 155), new Color(255,103,0), "Play", 250 + 0*100);
-        options[1] = new Button(new Font("Old English Text MT", Font.PLAIN, 55),new Font("Old English Text MT", Font.PLAIN, 65),
-                new Color(255,103,0, 155), new Color(255,103,0), "Online", 250 + 1*100);
-        options[2] = new Button(new Font("Old English Text MT", Font.PLAIN, 55),new Font("Old English Text MT", Font.PLAIN, 65),
-                new Color(255,103,0, 155), new Color(255,103,0), "Options", 250 + 2*100);
-        options[3] = new Button(new Font("Old English Text MT", Font.PLAIN, 55),new Font("Old English Text MT", Font.PLAIN, 65),
-                new Color(255,103,0, 155), new Color(255,103,0), "Exit", 250 + 3*100);
+        options[0] = new Button(new Font("Old English Text MT", Font.PLAIN, 75),new Font("Old English Text MT", Font.PLAIN, 85),
+                new Color(255,103,0, 155), new Color(255,103,0), "Play", 300 + 0*150);
+        options[1] = new Button(new Font("Old English Text MT", Font.PLAIN, 75),new Font("Old English Text MT", Font.PLAIN, 85),
+                new Color(255,103,0, 155), new Color(255,103,0), "Online", 300 + 1*150);
+        options[2] = new Button(new Font("Old English Text MT", Font.PLAIN, 75),new Font("Old English Text MT", Font.PLAIN, 85),
+                new Color(255,103,0, 155), new Color(255,103,0), "Options", 300 + 2*150);
+        options[3] = new Button(new Font("Old English Text MT", Font.PLAIN, 75),new Font("Old English Text MT", Font.PLAIN, 85),
+                new Color(255,103,0, 155), new Color(255,103,0), "Exit", 300 + 3*150);
     }
 
     @Override
