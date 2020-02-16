@@ -19,8 +19,13 @@ public class OfflineStage implements Stage {
     @Override
     public void render(Graphics2D g) {
         g.setColor(Color.GRAY);
+
         g.fillRect(0,0,1400,1100);
-        BordRenderer.rednderBoard(g, 350, 30);
+        BordRenderer.renderBoard(g, 350, 30);
+        if (board != null) {
+            board.render(g, 350, 30);
+        }
+
         for (int i = 0; i < buttons.length; i++) {
             if (i == currentSelection) {
                 buttons[i].setSelected(true);

@@ -93,6 +93,14 @@ public class Board {
 
     }
 
+    public void render(Graphics2D g, int ix, int iy){
+        for (int x = 0; x < pieces.length; x++) {
+            for (int y = 0; y < pieces[x].length; y++) {
+                pieces[y][x].render(g, x * 125 + ix, y * 125 + iy);
+            }
+        }
+    }
+
     @Override
     public String toString() {
         StringBuilder st = new StringBuilder();
@@ -109,9 +117,6 @@ public class Board {
             }
         }
         return st.toString().trim();
-    }
-    public void render(Graphics2D g){
-
     }
 
 }

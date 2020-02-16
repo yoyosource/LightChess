@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class BordRenderer {
 
-    public static void rednderBoard(Graphics2D g, int x, int y){
+    public static void renderBoard(Graphics2D g, int x, int y){
         g.setColor(Color.black);
         g.fillRect(x, y, 1000, 1000);
         g.setColor(Color.white);
