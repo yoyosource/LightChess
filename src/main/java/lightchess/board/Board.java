@@ -138,6 +138,17 @@ public class Board {
         return positions;
     }
 
+    public Position getKing(PieceColor color) {
+        for (int x = 0; x < pieces.length; x++) {
+            for (int y = 0; y < pieces[x].length; y++) {
+                if (pieces[y][x].isKing() && pieces[y][x].getColor() == color) {
+                    return new Position(x, y);
+                }
+            }
+        }
+        return null;
+    }
+
     private boolean move(Position from, Position to) {
         List<Position> positions = pieces[from.getY()][from.getX()].possibilities(this, from.getX(), from.getY());
         if (positions.contains(to)) {
@@ -200,6 +211,35 @@ public class Board {
                 g.fillOval(p.getX() * 125 + ix + 50, p.getY() * 125 + iy + 50, 25, 25);
             }
         }
+
+        checkCheck(g, ix, iy);
+    }
+
+    private void checkCheck(Graphics2D g, int ix, int iy) {
+        Position king = getKing(turn);
+        if (king == null) {
+            turn = PieceColor.UNDEFINED;
+            return;
+        }
+        List<Position> available = pieces[king.getY()][king.getX()].possibilities(this, king.getX(), king.getY());
+        List<Position> attacked = attacked();
+
+        if (available.isEmpty() && attacked.contains(king)) {
+            //System.out.println("Checkmate?");
+        }
+        if (attacked.contains(king)) {
+            g.setColor(new Color(200, 100, 100, 150));
+            g.fillRect(king.getX() * 125 + ix, king.getY() * 125 + iy, 125, 125);
+        }
+    }
+
+    private List<Position> attacked() {
+        List<Position> coloredPieces = getColoredPieces(PieceColor.getColor((turn.getColor() + 1) % 2));
+        List<Position> positions = new ArrayList<>();
+        for (Position p : coloredPieces) {
+            positions.addAll(pieces[p.getY()][p.getX()].possibilities(this, p.getX(), p.getY()));
+        }
+        return positions;
     }
 
     @Override

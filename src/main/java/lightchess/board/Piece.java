@@ -31,4 +31,8 @@ public class Piece {
         return getColor().toString() + " ";
     }
 
+    public boolean isKing() {
+        return false;
+    }
+
 }

@@ -57,4 +57,9 @@ public class King extends Piece {
     public String toString() {
         return getColor().toString() + "K";
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }
