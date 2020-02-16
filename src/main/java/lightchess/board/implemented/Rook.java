@@ -22,6 +22,9 @@ public class Rook extends Piece {
             if (board.isEmpty(x + i, y)) {
                 positions.add(new Position(x + i, y));
             } else {
+                if (board.isEnemy(x + i, y, getColor())) {
+                    positions.add(new Position(x + i, y));
+                }
                 break;
             }
             i++;
@@ -31,6 +34,9 @@ public class Rook extends Piece {
             if (board.isEmpty(x - i, y)) {
                 positions.add(new Position(x - i, y));
             } else {
+                if (board.isEnemy(x - i, y, getColor())) {
+                    positions.add(new Position(x - i, y));
+                }
                 break;
             }
             i++;
@@ -40,6 +46,9 @@ public class Rook extends Piece {
             if (board.isEmpty(x, y + i)) {
                 positions.add(new Position(x, y + i));
             } else {
+                if (board.isEnemy(x, y + i, getColor())) {
+                    positions.add(new Position(x, y + i));
+                }
                 break;
             }
             i++;
@@ -49,6 +58,9 @@ public class Rook extends Piece {
             if (board.isEmpty(x, y - i)) {
                 positions.add(new Position(x, y - i));
             } else {
+                if (board.isEnemy(x, y - i, getColor())) {
+                    positions.add(new Position(x, y - i));
+                }
                 break;
             }
             i++;

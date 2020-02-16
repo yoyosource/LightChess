@@ -17,6 +17,17 @@ public enum PieceColor {
         return b;
     }
 
+    public static PieceColor getColor(int i) {
+        if (i == -1) {
+            return UNDEFINED;
+        } else if (i  == 0) {
+            return WHITE;
+        } else if (i == 1) {
+            return BLACK;
+        }
+        return UNDEFINED;
+    }
+
     @Override
     public String toString() {
         if (b == 0) {

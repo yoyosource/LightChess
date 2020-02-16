@@ -22,6 +22,9 @@ public class Bishop extends Piece {
             if (board.isEmpty(x + i, y + i)) {
                 positions.add(new Position(x + i, y + i));
             } else {
+                if (board.isEnemy(x + i, y + i, getColor())) {
+                    positions.add(new Position(x + i, y + i));
+                }
                 break;
             }
             i++;
@@ -31,6 +34,9 @@ public class Bishop extends Piece {
             if (board.isEmpty(x - i, y - i)) {
                 positions.add(new Position(x - i, y - i));
             } else {
+                if (board.isEnemy(x - i, y - i, getColor())) {
+                    positions.add(new Position(x - i, y - i));
+                }
                 break;
             }
             i++;
@@ -40,6 +46,9 @@ public class Bishop extends Piece {
             if (board.isEmpty(x - i, y + i)) {
                 positions.add(new Position(x - i, y + i));
             } else {
+                if (board.isEnemy(x - i, y + i, getColor())) {
+                    positions.add(new Position(x - i, y + i));
+                }
                 break;
             }
             i++;
@@ -49,6 +58,9 @@ public class Bishop extends Piece {
             if (board.isEmpty(x + i, y - i)) {
                 positions.add(new Position(x + i, y - i));
             } else {
+                if (board.isEnemy(x + i, y - i, getColor())) {
+                    positions.add(new Position(x + i, y - i));
+                }
                 break;
             }
             i++;

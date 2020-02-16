@@ -4,18 +4,16 @@ import lightchess.board.implemented.*;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Board {
 
     private Piece[][] pieces = new Piece[8][8];
-    private boolean flip = false;
 
     private Position click = null;
 
-    //private String defaultBoard = "WR|WN|WB|WQ|WK|WB|WN|WR|WP|WP|WP|WP|WP|WP|WP|WP|||||||||||||||||||||||||||||||||BP|BP|BP|BP|BP|BP|BP|BP|BR|BN|BB|BQ|BK|BB|BN|BR";
-    private String defaultBoard = "|WN||||WB||||WP|||||||||||WQ||||WK|||||||WR||||||||||WB|||||||||||||||||||||||";
+    private String defaultBoard = "BR|BN|BB|BQ|BK|BB|BN|BR|BP|BP|BP|BP|BP|BP|BP|BP|||||||||||||||||||||||||||||||||WP|WP|WP|WP|WP|WP|WP|WP|WR|WN|WB|WQ|WK|WB|WN|WR|";
+    //private String defaultBoard = "|BN||||WB||||WP|||||||||||WQ||||WK|||||||WR||||||||||WB||BQ|||||||||||||||||||||";
 
     public static void main(String[] args) {
         createBoard();
@@ -111,11 +109,31 @@ public class Board {
         return pieces[y][x].getColor() == PieceColor.UNDEFINED;
     }
 
-    public void setFlip(boolean flip) {
-        if (true) {
-            throw new UnsupportedOperationException();
+    public boolean isEnemy(int x, int y, PieceColor color) {
+        try {
+            new Position(x, y);
+        } catch (IllegalArgumentException e) {
+            return false;
         }
-        this.flip = flip;
+        if (color == PieceColor.UNDEFINED) {
+            return false;
+        }
+        if (isEmpty(x, y)) {
+            return false;
+        }
+        return pieces[y][x].getColor() != color;
+    }
+
+    public List<Position> getColoredPieces(PieceColor color) {
+        List<Position> positions = new ArrayList<>();
+        for (int x = 0; x < pieces.length; x++) {
+            for (int y = 0; y < pieces[x].length; y++) {
+                if (pieces[y][x].getColor() == color) {
+                    positions.add(new Position(x, y));
+                }
+            }
+        }
+        return positions;
     }
 
     private boolean move(Position from, Position to) {
@@ -149,21 +167,22 @@ public class Board {
     public void render(Graphics2D g, int ix, int iy){
         for (int x = 0; x < pieces.length; x++) {
             for (int y = 0; y < pieces[x].length; y++) {
-                /*
-                if (!flip) {
-                    pieces[y][x].render(g, x * 125 + ix, ((pieces[x].length - 1) * 125 + iy * 2) - (y * 125 + iy));
-                } else {
-                    pieces[y][x].render(g, x * 125 + ix, y * 125 + iy);
-                }*/
-                pieces[y][x].render(g, ((pieces.length - 1) * 125 + ix * 2) - (x * 125 + ix), ((pieces[x].length - 1) * 125 + iy * 2) - (y * 125 + iy));
+                //pieces[y][x].render(g, ((pieces.length - 1) * 125 + ix * 2) - (x * 125 + ix), ((pieces[x].length - 1) * 125 + iy * 2) - (y * 125 + iy));
+                pieces[y][x].render(g, (x * 125 + ix), (y * 125 + iy));
             }
         }
         if (click != null) {
             Position position = this.click.copy();
             List<Position> positions = pieces[position.getY()][position.getX()].possibilities(this, position.getX(), position.getY());
-            g.setColor(new Color(100, 200, 100, 100));
+            g.setColor(new Color(100, 200, 100, 150));
             for (Position p : positions) {
-                g.fillRect(p.getX() * 125 + ix, p.getY() * 125 + iy, 125, 125);
+                if (!isEmpty(p.getX(), p.getY())) {
+                    g.setColor(new Color(200, 100, 100, 150));
+                }
+                g.fillOval(p.getX() * 125 + ix + 50, p.getY() * 125 + iy + 50, 25, 25);
+                if (!isEmpty(p.getX(), p.getY())) {
+                    g.setColor(new Color(100, 200, 100, 150));
+                }
             }
         }
     }

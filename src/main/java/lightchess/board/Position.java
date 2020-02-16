@@ -31,16 +31,10 @@ public class Position {
     }
 
     public int getX() {
-        if (!flip) {
-            return 7 - x;
-        }
         return x;
     }
 
     public int getY() {
-        if (!flip) {
-            return 7 - y;
-        }
         return y;
     }
 
