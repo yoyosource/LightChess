@@ -58,6 +58,9 @@ public class MenuStage implements Stage {
         }
         if(MouseInput.wasReleased(1)){
             System.out.println(currentSelection);
+            if(currentSelection == 3){
+                System.exit(0);
+            }
         }
 
     }
