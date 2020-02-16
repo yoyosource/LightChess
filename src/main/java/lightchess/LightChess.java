@@ -32,10 +32,15 @@ public class LightChess {
         jFrame.add(draw);
         jFrame.validate();
 
+        MouseInput mi = new MouseInput();
+        draw.addMouseListener(mi);
+        draw.addMouseMotionListener(mi);
+
         Runnable runnable = () -> {
             while (true) {
                 draw.tick();
                 draw.render();
+                MouseInput.update();
                 try {
                     Thread.sleep(1000/60);
                 } catch (InterruptedException e) {
