@@ -3,6 +3,8 @@ package lightchess.board;
 import lightchess.board.implemented.*;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Board {
@@ -12,7 +14,8 @@ public class Board {
 
     private Position click = null;
 
-    private String defaultBoard = "WR|WN|WB|WQ|WK|WB|WN|WR|WP|WP|WP|WP|WP|WP|WP|WP|||||||||||||||||||||||||||||||||BP|BP|BP|BP|BP|BP|BP|BP|BR|BN|BB|BQ|BK|BB|BN|BR";
+    //private String defaultBoard = "WR|WN|WB|WQ|WK|WB|WN|WR|WP|WP|WP|WP|WP|WP|WP|WP|||||||||||||||||||||||||||||||||BP|BP|BP|BP|BP|BP|BP|BP|BR|BN|BB|BQ|BK|BB|BN|BR";
+    private String defaultBoard = "|WN||||WB||||WP|||||||||||WQ||||WK|||||||WR||||||||||WB|||||||||||||||||||||||";
 
     public static void main(String[] args) {
         createBoard();
@@ -27,7 +30,17 @@ public class Board {
     }
 
     private void board(String s) {
-        String[] strings = defaultBoard.split("\\|");
+        List<String> str = new ArrayList<>();
+        StringBuilder st = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '|') {
+                str.add(st.toString());
+                st = new StringBuilder();
+            } else {
+                st.append(s.charAt(i));
+            }
+        }
+        String[] strings = str.toArray(new String[0]);
         if (strings.length != 64) {
             throw new IllegalArgumentException("Board is not 64 tiles big. (" + strings.length + ")");
         }
@@ -90,20 +103,24 @@ public class Board {
     }
 
     public boolean isEmpty(int x, int y) {
+        try {
+            new Position(x, y);
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
         return pieces[y][x].getColor() == PieceColor.UNDEFINED;
     }
 
     public void setFlip(boolean flip) {
+        if (true) {
+            throw new UnsupportedOperationException();
+        }
         this.flip = flip;
     }
 
     private boolean move(Position from, Position to) {
-        from.flipY();
         List<Position> positions = pieces[from.getY()][from.getX()].possibilities(this, from.getX(), from.getY());
-        to.flipX();
-        System.out.println(from + "   " + to + " -> " +  positions);
         if (positions.contains(to)) {
-            from.flip();
             Piece p = pieces[from.getY()][from.getX()];
             pieces[from.getY()][from.getX()] = new Piece(PieceColor.UNDEFINED);
             pieces[to.getY()][to.getX()] = p;
@@ -114,15 +131,15 @@ public class Board {
 
     public synchronized void click(Position click) {
         if (click == null) {
+            this.click = null;
             return;
         }
         if (this.click != null) {
             if (move(this.click.copy(), click.copy())) {
-                click = null;
+                this.click = null;
                 return;
             }
         }
-        System.out.println(toString());
         if (pieces[click.getY()][click.getX()].getColor() == PieceColor.UNDEFINED) {
             this.click = null;
         }
@@ -132,20 +149,20 @@ public class Board {
     public void render(Graphics2D g, int ix, int iy){
         for (int x = 0; x < pieces.length; x++) {
             for (int y = 0; y < pieces[x].length; y++) {
+                /*
                 if (!flip) {
                     pieces[y][x].render(g, x * 125 + ix, ((pieces[x].length - 1) * 125 + iy * 2) - (y * 125 + iy));
                 } else {
                     pieces[y][x].render(g, x * 125 + ix, y * 125 + iy);
-                }
+                }*/
+                pieces[y][x].render(g, ((pieces.length - 1) * 125 + ix * 2) - (x * 125 + ix), ((pieces[x].length - 1) * 125 + iy * 2) - (y * 125 + iy));
             }
         }
         if (click != null) {
             Position position = this.click.copy();
-            position.flipY();
             List<Position> positions = pieces[position.getY()][position.getX()].possibilities(this, position.getX(), position.getY());
             g.setColor(new Color(100, 200, 100, 100));
             for (Position p : positions) {
-                p.flipY();
                 g.fillRect(p.getX() * 125 + ix, p.getY() * 125 + iy, 125, 125);
             }
         }

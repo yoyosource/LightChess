@@ -5,7 +5,7 @@ import lightchess.board.Piece;
 import lightchess.board.PieceColor;
 import lightchess.board.Position;
 
-import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Bishop extends Piece {
@@ -16,7 +16,44 @@ public class Bishop extends Piece {
 
     @Override
     public List<Position> possibilities(Board board, int x, int y) {
-        return super.possibilities(board, x, y);
+        List<Position> positions = new ArrayList<>();
+        int i = 1;
+        while (i < 8) {
+            if (board.isEmpty(x + i, y + i)) {
+                positions.add(new Position(x + i, y + i));
+            } else {
+                break;
+            }
+            i++;
+        }
+        i = 1;
+        while (i < 8) {
+            if (board.isEmpty(x - i, y - i)) {
+                positions.add(new Position(x - i, y - i));
+            } else {
+                break;
+            }
+            i++;
+        }
+        i = 1;
+        while (i < 8) {
+            if (board.isEmpty(x - i, y + i)) {
+                positions.add(new Position(x - i, y + i));
+            } else {
+                break;
+            }
+            i++;
+        }
+        i = 1;
+        while (i < 8) {
+            if (board.isEmpty(x + i, y - i)) {
+                positions.add(new Position(x + i, y - i));
+            } else {
+                break;
+            }
+            i++;
+        }
+        return positions;
     }
 
     @Override

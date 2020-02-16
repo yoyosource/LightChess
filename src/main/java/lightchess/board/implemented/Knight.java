@@ -5,7 +5,7 @@ import lightchess.board.Piece;
 import lightchess.board.PieceColor;
 import lightchess.board.Position;
 
-import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Knight extends Piece {
@@ -16,7 +16,33 @@ public class Knight extends Piece {
 
     @Override
     public List<Position> possibilities(Board board, int x, int y) {
-        return super.possibilities(board, x, y);
+        List<Position> positions = new ArrayList<>();
+        if (board.isEmpty(x + 2, y + 1)) {
+            positions.add(new Position(x + 2, y + 1));
+        }
+        if (board.isEmpty(x + 2, y - 1)) {
+            positions.add(new Position(x + 2, y - 1));
+        }
+        if (board.isEmpty(x - 2, y + 1)) {
+            positions.add(new Position(x - 2, y + 1));
+        }
+        if (board.isEmpty(x - 2, y - 1)) {
+            positions.add(new Position(x - 2, y - 1));
+        }
+
+        if (board.isEmpty(x + 1, y + 2)) {
+            positions.add(new Position(x + 1, y + 2));
+        }
+        if (board.isEmpty(x + 1, y - 2)) {
+            positions.add(new Position(x + 1, y - 2));
+        }
+        if (board.isEmpty(x - 1, y + 2)) {
+            positions.add(new Position(x - 1, y + 2));
+        }
+        if (board.isEmpty(x - 1, y - 2)) {
+            positions.add(new Position(x - 1, y - 2));
+        }
+        return positions;
     }
 
     @Override
