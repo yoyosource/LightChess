@@ -13,7 +13,7 @@ public class MenuStage implements Stage {
     int ani = 255;
     boolean way = false;
     int currentSelection = 1;
-    lightchess.render.Button[] options = new Button[4];
+    lightchess.render.Button[] options = new Button[5];
 
     @Override
     public void render(Graphics2D g) {
@@ -29,8 +29,8 @@ public class MenuStage implements Stage {
             }
             options[i].render(g);
         }
-        if(!LightChess.resourceManager.isLoading("BP")){
-            g.drawImage(LightChess.resourceManager.getImage("BP"), 100, 100, null);
+        if(!LightChess.resourceManager.isLoading("WP")){
+            g.drawImage(LightChess.resourceManager.getImage("WP"), 100, 100, null);
         }
 
     }
@@ -82,7 +82,9 @@ public class MenuStage implements Stage {
         options[2] = new Button(new Font("Old English Text MT", Font.PLAIN, 75),new Font("Old English Text MT", Font.PLAIN, 85),
                 new Color(255,103,0, 155), new Color(255,103,0), "Options", 300 + 2*150);
         options[3] = new Button(new Font("Old English Text MT", Font.PLAIN, 75),new Font("Old English Text MT", Font.PLAIN, 85),
-                new Color(255,103,0, 155), new Color(255,103,0), "Exit", 300 + 3*150);
+                new Color(255,103,0, 155), new Color(255,103,0), "Credits", 300 + 3*150);
+        options[4] = new Button(new Font("Old English Text MT", Font.PLAIN, 75),new Font("Old English Text MT", Font.PLAIN, 85),
+                new Color(255,103,0, 155), new Color(255,103,0), "Exit", 300 + 4*150);
     }
 
     @Override
