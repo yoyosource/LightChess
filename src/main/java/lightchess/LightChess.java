@@ -2,6 +2,8 @@ package lightchess;
 
 import lightchess.render.Draw;
 import lightchess.render.Stage;
+import lightchess.resourceManager.LoadingQueue;
+import lightchess.resourceManager.ResourceManager;
 import lightchess.stages.MenuStage;
 import lightchess.stages.OptionsStage;
 
@@ -15,7 +17,24 @@ public class LightChess {
     public static List<Stage> stages = new ArrayList<>();
     public static long frames;
 
+    public static ResourceManager resourceManager = new ResourceManager();
+
     public static void main(String[] args) {
+        LoadingQueue loadingQueue = new LoadingQueue();
+        loadingQueue.add("pieces/white/Bishop.png", "WB", true);
+        loadingQueue.add("pieces/white/King.png", "WK", true);
+        loadingQueue.add("pieces/white/Knight.png", "WN", true);
+        loadingQueue.add("pieces/white/Pawn.png", "WP", true);
+        loadingQueue.add("pieces/white/Queen.png", "WQ", true);
+        loadingQueue.add("pieces/white/Rook.png", "WR", true);
+
+        loadingQueue.add("pieces/black/Bishop.png", "WB", true);
+        loadingQueue.add("pieces/black/King.png", "WK", true);
+        loadingQueue.add("pieces/black/Knight.png", "WN", true);
+        loadingQueue.add("pieces/black/Pawn.png", "WP", true);
+        loadingQueue.add("pieces/black/Queen.png", "WQ", true);
+        loadingQueue.add("pieces/black/Rook.png", "WR", true);
+        resourceManager.load(loadingQueue);
 
         initStages();
 
