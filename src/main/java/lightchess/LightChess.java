@@ -36,6 +36,7 @@ public class LightChess {
         MouseInput mi = new MouseInput();
         draw.addMouseListener(mi);
         draw.addMouseMotionListener(mi);
+        draw.addKeyListener(new KeyInput());
 
         Runnable runnable = () -> {
             while (true) {

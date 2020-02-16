@@ -1,9 +1,12 @@
 package lightchess.stages;
 
+import lightchess.KeyInput;
+import lightchess.LightChess;
 import lightchess.render.Fonts;
 import lightchess.render.Stage;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class OptionsStage implements Stage {
     @Override
@@ -15,7 +18,9 @@ public class OptionsStage implements Stage {
 
     @Override
     public void tick() {
-
+        if(KeyInput.wasPressed(KeyEvent.VK_ESCAPE)){
+            LightChess.draw.setStage(0);
+        }
     }
 
     @Override
