@@ -13,10 +13,13 @@ public class LightChess {
 
     public static Draw draw;
     public static List<Stage> stages = new ArrayList<>();
+    public static long frames;
 
     public static void main(String[] args) {
 
         initStages();
+
+        OptionManager.load();
 
         draw = new Draw();
 
@@ -39,10 +42,17 @@ public class LightChess {
         draw.addKeyListener(new KeyInput());
 
         Runnable runnable = () -> {
+            int i = 0;
             while (true) {
                 draw.tick();
-                draw.render();
                 MouseInput.update();
+                KeyInput.update();
+                i++;
+                if(i > 60){
+                    i = 0;
+                    System.out.println(frames);
+                    frames = 0;
+                }
                 try {
                     Thread.sleep(1000/60);
                 } catch (InterruptedException e) {
@@ -50,9 +60,25 @@ public class LightChess {
                 }
             }
         };
+        Runnable runnable1 = () ->{
+            while (true){
+                draw.render();
+                frames++;
+                if(OptionManager.getoption("limitfps")){
+                    try {
+                        Thread.sleep(1000/60);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();;
+                    }
+                }
+            }
+        };
         Thread t = new Thread(runnable);
-        t.setName("Renderer");
+        t.setName("Game-Tick");
         t.start();
+        Thread t2 = new Thread(runnable1);
+        t2.setName("Renderer");
+        t2.start();
     }
 
     public static void initStages() {

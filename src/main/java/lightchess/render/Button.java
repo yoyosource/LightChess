@@ -9,6 +9,7 @@ public class Button extends Rectangle {
     private boolean selected;
     private String text;
     private int texty, textx;
+    private int widhtplus;
 
     public Button(Font font, Font selectedfont, Color color, Color selectedcolor, String text, int y) {
         this.font = font;
@@ -19,6 +20,7 @@ public class Button extends Rectangle {
         this.text = text;
         this.texty = y;
         this.textx = -1;
+        widhtplus = 0;
     }
     public Button(Font font, Font selectedfont, Color color, Color selectedcolor, String text, int x, int y) {
         this.font = font;
@@ -29,10 +31,15 @@ public class Button extends Rectangle {
         this.text = text;
         this.texty = y;
         this.textx = x;
+        widhtplus = 0;
     }
 
     public void setSelected(boolean bool){
         this.selected = bool;
+    }
+
+    public void setWidhtplus(int i){
+        widhtplus = i;
     }
 
     public void render(Graphics2D g){
@@ -44,7 +51,7 @@ public class Button extends Rectangle {
             FontMetrics fm = g.getFontMetrics();
             this.x = 500 - fm.stringWidth(text) / 2;
             this.y = texty - fm.getHeight();
-            this.width = fm.stringWidth(text);
+            this.width = fm.stringWidth(text) + widhtplus;
             this.height = fm.getHeight();
         }else{
             if(selected)
@@ -52,9 +59,9 @@ public class Button extends Rectangle {
             else
                 Fonts.string(g, font, color, text, textx, texty);
             FontMetrics fm = g.getFontMetrics();
-            this.x = 500 - fm.stringWidth(text) / 2;
+            this.x = textx;
             this.y = texty - fm.getHeight();
-            this.width = fm.stringWidth(text);
+            this.width = fm.stringWidth(text) + widhtplus;
             this.height = fm.getHeight();
         }
 
