@@ -22,10 +22,11 @@ public class MenuStage implements Stage {
         Fonts.string(g, new Font("Old English Text MT", Font.PLAIN, 70), new Color(255,103,0 , ani), "Light Chess", 150);
 
         for (int i = 0; i < options.length; i++) {
-            if(i == currentSelection)
+            if (i == currentSelection) {
                 options[i].setSelected(true);
-            else
+            } else {
                 options[i].setSelected(false);
+            }
             options[i].render(g);
         }
 
@@ -46,18 +47,18 @@ public class MenuStage implements Stage {
                 way = true;
             }
         }
-        boolean intesects = false;
+        boolean intersects = false;
         for (int i = 0; i < options.length; i++) {
-            if(options[i].intersects(new Rectangle(MouseInput.getX(), MouseInput.getY(), 1,1))){
+            if (options[i].intersects(new Rectangle(MouseInput.getX(), MouseInput.getY(), 1,1))) {
                 currentSelection = i;
-                intesects = true;
+                intersects = true;
             }
 
         }
-        if( !intesects){
+        if (!intersects) {
             currentSelection = -1;
         }
-        if(MouseInput.wasReleased(1)){
+        if (MouseInput.wasReleased(1)) {
             System.out.println(currentSelection);
             if(currentSelection == 3){
                 System.exit(0);
@@ -71,13 +72,13 @@ public class MenuStage implements Stage {
 
     @Override
     public void start() {
-        options[0] = new lightchess.render.Button(new Font("Old English Text MT", Font.PLAIN, 55),new Font("Old English Text MT", Font.PLAIN, 65),
+        options[0] = new Button(new Font("Old English Text MT", Font.PLAIN, 55),new Font("Old English Text MT", Font.PLAIN, 65),
                 new Color(255,103,0, 155), new Color(255,103,0), "Play", 250 + 0*100);
-        options[1] = new lightchess.render.Button(new Font("Old English Text MT", Font.PLAIN, 55),new Font("Old English Text MT", Font.PLAIN, 65),
+        options[1] = new Button(new Font("Old English Text MT", Font.PLAIN, 55),new Font("Old English Text MT", Font.PLAIN, 65),
                 new Color(255,103,0, 155), new Color(255,103,0), "Online", 250 + 1*100);
-        options[2] = new lightchess.render.Button(new Font("Old English Text MT", Font.PLAIN, 55),new Font("Old English Text MT", Font.PLAIN, 65),
+        options[2] = new Button(new Font("Old English Text MT", Font.PLAIN, 55),new Font("Old English Text MT", Font.PLAIN, 65),
                 new Color(255,103,0, 155), new Color(255,103,0), "Options", 250 + 2*100);
-        options[3] = new lightchess.render.Button(new Font("Old English Text MT", Font.PLAIN, 55),new Font("Old English Text MT", Font.PLAIN, 65),
+        options[3] = new Button(new Font("Old English Text MT", Font.PLAIN, 55),new Font("Old English Text MT", Font.PLAIN, 65),
                 new Color(255,103,0, 155), new Color(255,103,0), "Exit", 250 + 3*100);
     }
 
