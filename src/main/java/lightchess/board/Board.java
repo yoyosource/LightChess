@@ -223,17 +223,21 @@ public class Board {
         int blackMaterial = calcMaterial(PieceColor.BLACK);
 
         g.setColor(new Color(75, 75, 75));
-        g.fillRect(350 - 30, iy, 25, 1000);
+        g.fillRect(ix - 30, iy, 25, 1000);
 
         double factor = 12.8205128205;
 
         g.setColor(Color.BLACK);
         g.fillRect(350 - 28, iy + 2, 21, (int)(blackMaterial * factor));
         g.setColor(Color.WHITE);
-        g.fillRect(350 - 28, 1000 + iy - 2 - (int)(whiteMaterial * factor), 21, (int)(whiteMaterial * factor));
+        g.fillRect(ix - 28, 1000 + iy - 2 - (int)(whiteMaterial * factor), 21, (int)(whiteMaterial * factor));
+
+        g.drawString(blackMaterial + "", ix - 28, iy + 10);
+        g.setColor(Color.BLACK);
+        g.drawString(whiteMaterial + "", ix - 28, 1000 + iy - 10);
 
         g.setColor(new Color(100, 200, 100));
-        g.fillRect(350 - 28, 499 + iy, 21, 2);
+        g.fillRect(ix - 28, 499 + iy, 21, 2);
     }
 
     private boolean checkCheck(Graphics2D g, int ix, int iy, PieceColor color) {
