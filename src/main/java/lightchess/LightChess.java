@@ -106,6 +106,7 @@ public class LightChess {
         stages.add(new OfflineStage());
         stages.add(new CreditStage());
         stages.add(new ConnectStage());
+        stages.add(new OnlineStage());
     }
 
 }
