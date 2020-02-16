@@ -98,29 +98,31 @@ public class Board {
     }
 
     private boolean move(Position from, Position to) {
+        from.flipY();
         List<Position> positions = pieces[from.getY()][from.getX()].possibilities(this, from.getX(), from.getY());
-        to.flip();
+        to.flipX();
+        System.out.println(from + "   " + to + " -> " +  positions);
         if (positions.contains(to)) {
-            from.flipX();
+            from.flip();
             Piece p = pieces[from.getY()][from.getX()];
             pieces[from.getY()][from.getX()] = new Piece(PieceColor.UNDEFINED);
-            to.flipY();
             pieces[to.getY()][to.getX()] = p;
             return true;
         }
         return false;
     }
 
-    public void click(Position click) {
+    public synchronized void click(Position click) {
         if (click == null) {
             return;
         }
-        Position.setFlip(flip);
         if (this.click != null) {
-            if (move(this.click, click.copy())) {
+            if (move(this.click.copy(), click.copy())) {
+                click = null;
                 return;
             }
         }
+        System.out.println(toString());
         if (pieces[click.getY()][click.getX()].getColor() == PieceColor.UNDEFINED) {
             this.click = null;
         }
@@ -138,9 +140,12 @@ public class Board {
             }
         }
         if (click != null) {
-            List<Position> positions = pieces[click.getY()][click.getX()].possibilities(this, click.getX(), click.getY());
+            Position position = this.click.copy();
+            position.flipY();
+            List<Position> positions = pieces[position.getY()][position.getX()].possibilities(this, position.getX(), position.getY());
             g.setColor(new Color(100, 200, 100, 100));
             for (Position p : positions) {
+                p.flipY();
                 g.fillRect(p.getX() * 125 + ix, p.getY() * 125 + iy, 125, 125);
             }
         }
