@@ -1,5 +1,6 @@
 package lightchess.stages;
 
+import lightchess.LightChess;
 import lightchess.MouseInput;
 import lightchess.render.Button;
 import lightchess.render.Fonts;
@@ -60,7 +61,10 @@ public class MenuStage implements Stage {
             System.out.println(currentSelection);
             if(currentSelection == 3){
                 System.exit(0);
+            }else if( currentSelection == 2){
+                LightChess.draw.setStage(1);
             }
+
         }
 
     }

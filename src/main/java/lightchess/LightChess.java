@@ -3,6 +3,7 @@ package lightchess;
 import lightchess.render.Draw;
 import lightchess.render.Stage;
 import lightchess.stages.MenuStage;
+import lightchess.stages.OptionsStage;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.List;
 
 public class LightChess {
 
-    private static Draw draw;
+    public static Draw draw;
     public static List<Stage> stages = new ArrayList<>();
 
     public static void main(String[] args) {
@@ -55,6 +56,7 @@ public class LightChess {
 
     public static void initStages() {
         stages.add(new MenuStage());
+        stages.add(new OptionsStage());
     }
 
 }
