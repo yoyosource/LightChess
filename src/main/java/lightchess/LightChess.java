@@ -5,6 +5,7 @@ import lightchess.render.Stage;
 import lightchess.resourceManager.LoadingQueue;
 import lightchess.resourceManager.ResourceManager;
 import lightchess.stages.MenuStage;
+import lightchess.stages.OfflineStage;
 import lightchess.stages.OptionsStage;
 
 import javax.swing.*;
@@ -49,7 +50,7 @@ public class LightChess {
         jFrame.setResizable(false);
         jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        jFrame.setSize(1000, 700);
+        jFrame.setSize(1400, 1100);
         jFrame.setLocationRelativeTo(null);
 
         jFrame.setVisible(true);
@@ -104,6 +105,7 @@ public class LightChess {
     public static void initStages() {
         stages.add(new MenuStage());
         stages.add(new OptionsStage());
+        stages.add(new OfflineStage());
     }
 
 }

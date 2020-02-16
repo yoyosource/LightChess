@@ -49,7 +49,7 @@ public class Button extends Rectangle {
             else
                 Fonts.string(g, font, color, text, texty);
             FontMetrics fm = g.getFontMetrics();
-            this.x = 500 - fm.stringWidth(text) / 2;
+            this.x = 700 - fm.stringWidth(text) / 2;
             this.y = texty - fm.getHeight();
             this.width = fm.stringWidth(text) + widhtplus;
             this.height = fm.getHeight();

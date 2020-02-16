@@ -19,7 +19,7 @@ public class OptionsStage implements Stage {
     @Override
     public void render(Graphics2D g) {
         g.setColor(Color.GRAY);
-        g.fillRect(0,0,1000,700);
+        g.fillRect(0,0,1400,1100);
         Fonts.string(g, new Font("Old English Text MT", Font.PLAIN, 70), new Color(255,103,0), "Options", 100);
         for (int i = 0; i < buttons.length; i++) {
             if (i == currentSelection) {
