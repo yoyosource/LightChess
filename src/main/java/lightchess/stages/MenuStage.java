@@ -1,5 +1,7 @@
 package lightchess.stages;
 
+import lightchess.MouseInput;
+import lightchess.render.Fonts;
 import lightchess.render.Stage;
 
 import java.awt.*;
@@ -8,6 +10,8 @@ public class MenuStage implements Stage {
 
     int ani = 255;
     boolean way = false;
+    String[] options = {"Play", "Options", "Exit"};
+    int selected = 1;
 
     @Override
     public void render(Graphics2D g) {
@@ -17,10 +21,29 @@ public class MenuStage implements Stage {
         g.setColor(new Color(255,103,0 , ani));
         g.setFont(f);
         g.setFont(new Font("Old English Text MT", Font.PLAIN, 45));
-        FontMetrics fm = g.getFontMetrics(f);
-        String str = "Light Chess";
-        int x = 400 - (fm.stringWidth(str) / 2);
-        g.drawString(str, x , 150);
+        FontMetrics fm1 = g.getFontMetrics(f);
+        String str1 = "Light Chess";
+        int x = 400 - (fm1.stringWidth(str1) / 2);
+        g.drawString(str1, x , 150);
+        for (String str:
+                options) {
+            FontMetrics fm = g.getFontMetrics(f);
+            if(MouseInput.x >= 400 - fm.stringWidth(str) / 2){
+                if(MouseInput.x <= 400 + fm.stringWidth(str) / 2){
+                    if(MouseInput.y >= )
+                }
+            }
+        }
+        Color c = new Color(255,103,0);
+        Color c1 = new Color(255,103,0, 155);
+        for (int i = 0; i < options.length; i++) {
+            if(i == selected){
+                Fonts.string(g, new Font("Old English Text MT", Font.PLAIN, 55), c, options[i], 250 + i*80);
+            }else{
+                Fonts.string(g, new Font("Old English Text MT", Font.PLAIN, 45), c1, options[i], 250 + i*80);
+            }
+        }
+
     }
 
     @Override
@@ -38,6 +61,7 @@ public class MenuStage implements Stage {
                 way = true;
             }
         }
+
     }
 
     @Override
