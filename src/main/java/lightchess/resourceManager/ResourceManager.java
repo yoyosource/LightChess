@@ -13,24 +13,10 @@ public class ResourceManager {
 
     private List<String> loading = new ArrayList<>();
 
-    /**
-     *
-     * @since Version 1.1
-     *
-     * @param name
-     * @return
-     */
     public byte[] getBytes(String name) {
         return byteMap.get(name);
     }
 
-    /**
-     *
-     * @since Version 1.1
-     *
-     * @param name
-     * @return
-     */
     public String getString(String name) {
         StringBuilder st = new StringBuilder();
         byte[] bytes = byteMap.get(name);
@@ -40,24 +26,10 @@ public class ResourceManager {
         return st.toString();
     }
 
-    /**
-     *
-     * @since Version 1.1
-     *
-     * @param name
-     * @return
-     */
     public BufferedImage getImage(String name) {
         return imageMap.get(name);
     }
 
-    /**
-     *
-     * @since Version 1.1
-     *
-     * @param path
-     * @param name
-     */
     private void load(String path, String name) {
         if (loading.contains(name)) {
             return;
@@ -81,13 +53,6 @@ public class ResourceManager {
         loading.remove(name);
     }
 
-    /**
-     *
-     * @since Version 1.1
-     *
-     * @param path
-     * @param name
-     */
     public void loadAsync(String path, String name) {
         Runnable r = () -> load(path, name);
         Thread t = new Thread(r);
@@ -95,13 +60,6 @@ public class ResourceManager {
         t.start();
     }
 
-    /**
-     *
-     * @since Version 1.1
-     *
-     * @param path
-     * @param name
-     */
     public void loadSync(String path, String name) {
         load(path, name);
     }
@@ -123,12 +81,6 @@ public class ResourceManager {
         return t;
     }
 
-    /**
-     *
-     * @since Version 1.1
-     *
-     * @param loadingQueue
-     */
     public void load(LoadingQueue loadingQueue) {
         List<QueueEntry> queueEntries = new ArrayList<>();
         while (loadingQueue.hasNext()) {
@@ -137,12 +89,6 @@ public class ResourceManager {
         load(queueEntries);
     }
 
-    /**
-     *
-     * @since Version 1.1
-     *
-     * @param loadingQueue
-     */
     public void awaitLoad(LoadingQueue loadingQueue) {
         List<QueueEntry> queueEntries = new ArrayList<>();
         while (loadingQueue.hasNext()) {
@@ -155,45 +101,18 @@ public class ResourceManager {
         }
     }
 
-    /**
-     *
-     * @since Version 1.1
-     *
-     * @param name
-     * @return
-     */
     public boolean hasByte(String name) {
         return byteMap.containsKey(name);
     }
 
-    /**
-     *
-     * @since Version 1.1
-     *
-     * @param name
-     * @return
-     */
     public boolean hasImage(String name) {
         return imageMap.containsKey(name);
     }
 
-    /**
-     *
-     * @since Version 1.1
-     *
-     * @param name
-     * @return
-     */
     public boolean isLoading(String name) {
         return loading.contains(name);
     }
 
-    /**
-     *
-     * @since Version 1.1
-     *
-     * @return
-     */
     public static LoadingQueue getQueue() {
         return new LoadingQueue();
     }

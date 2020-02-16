@@ -21,19 +21,20 @@ public class LightChess {
 
     public static void main(String[] args) {
         LoadingQueue loadingQueue = new LoadingQueue();
+        loadingQueue.add("pieces/white/Pawn.png", "WP", false);
+        loadingQueue.add("pieces/black/Pawn.png", "BP", false);
+
         loadingQueue.add("pieces/white/Bishop.png", "WB", true);
         loadingQueue.add("pieces/white/King.png", "WK", true);
         loadingQueue.add("pieces/white/Knight.png", "WN", true);
-        loadingQueue.add("pieces/white/Pawn.png", "WP", true);
         loadingQueue.add("pieces/white/Queen.png", "WQ", true);
         loadingQueue.add("pieces/white/Rook.png", "WR", true);
 
-        loadingQueue.add("pieces/black/Bishop.png", "WB", true);
-        loadingQueue.add("pieces/black/King.png", "WK", true);
-        loadingQueue.add("pieces/black/Knight.png", "WN", true);
-        loadingQueue.add("pieces/black/Pawn.png", "WP", true);
-        loadingQueue.add("pieces/black/Queen.png", "WQ", true);
-        loadingQueue.add("pieces/black/Rook.png", "WR", true);
+        loadingQueue.add("pieces/black/Bishop.png", "BB", true);
+        loadingQueue.add("pieces/black/King.png", "BK", true);
+        loadingQueue.add("pieces/black/Knight.png", "BN", true);
+        loadingQueue.add("pieces/black/Queen.png", "BQ", true);
+        loadingQueue.add("pieces/black/Rook.png", "BR", true);
         resourceManager.load(loadingQueue);
 
         initStages();
