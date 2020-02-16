@@ -10,10 +10,12 @@ public class Board {
 
     private Piece[][] pieces = new Piece[8][8];
 
+    private PieceColor turn = PieceColor.WHITE;
+    private PieceColor yourColor = PieceColor.WHITE;
+
     private Position click = null;
 
     private String defaultBoard = "BR|BN|BB|BQ|BK|BB|BN|BR|BP|BP|BP|BP|BP|BP|BP|BP|||||||||||||||||||||||||||||||||WP|WP|WP|WP|WP|WP|WP|WP|WR|WN|WB|WQ|WK|WB|WN|WR|";
-    //private String defaultBoard = "|BN||||WB||||WP|||||||||||WQ||||WK|||||||WR||||||||||WB||BQ|||||||||||||||||||||";
 
     public static void main(String[] args) {
         createBoard();
@@ -152,14 +154,21 @@ public class Board {
             this.click = null;
             return;
         }
+        if (turn != yourColor) {
+            this.click = null;
+            return;
+        }
         if (this.click != null) {
             if (move(this.click.copy(), click.copy())) {
                 this.click = null;
+                turn = PieceColor.getColor((turn.getColor() + 1) % 2);
+                yourColor = PieceColor.getColor(turn.getColor());
                 return;
             }
         }
-        if (pieces[click.getY()][click.getX()].getColor() == PieceColor.UNDEFINED) {
+        if (pieces[click.getY()][click.getX()].getColor() != turn) {
             this.click = null;
+            return;
         }
         this.click = click;
     }
@@ -167,22 +176,28 @@ public class Board {
     public void render(Graphics2D g, int ix, int iy){
         for (int x = 0; x < pieces.length; x++) {
             for (int y = 0; y < pieces[x].length; y++) {
-                //pieces[y][x].render(g, ((pieces.length - 1) * 125 + ix * 2) - (x * 125 + ix), ((pieces[x].length - 1) * 125 + iy * 2) - (y * 125 + iy));
                 pieces[y][x].render(g, (x * 125 + ix), (y * 125 + iy));
             }
+        }
+        Color green = new Color(100, 200, 100, 150);
+        g.setColor(green);
+        if (turn == PieceColor.WHITE) {
+            g.fillRect(350, 1000 + iy, 1000, 10);
+        } else if (turn == PieceColor.BLACK) {
+            g.fillRect(350, iy - 10, 1000, 10);
         }
         if (click != null) {
             Position position = this.click.copy();
             List<Position> positions = pieces[position.getY()][position.getX()].possibilities(this, position.getX(), position.getY());
-            g.setColor(new Color(100, 200, 100, 150));
+            Color red = new Color(200, 100, 100, 150);
+
             for (Position p : positions) {
                 if (!isEmpty(p.getX(), p.getY())) {
-                    g.setColor(new Color(200, 100, 100, 150));
+                    g.setColor(red);
+                } else {
+                    g.setColor(green);
                 }
                 g.fillOval(p.getX() * 125 + ix + 50, p.getY() * 125 + iy + 50, 25, 25);
-                if (!isEmpty(p.getX(), p.getY())) {
-                    g.setColor(new Color(100, 200, 100, 150));
-                }
             }
         }
     }

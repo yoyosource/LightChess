@@ -27,6 +27,9 @@ public class Pawn extends Piece {
             if (board.isEnemy(x - 1, y - 1, getColor())) {
                 positions.add(new Position(x - 1, y - 1));
             }
+            if (board.isEnemy(x + 1, y - 1, getColor())) {
+                positions.add(new Position(x + 1, y - 1));
+            }
         }
         if (getColor() == PieceColor.BLACK) {
             if (y == 1 && board.isEmpty(x , y + 2)) {
@@ -37,6 +40,9 @@ public class Pawn extends Piece {
             }
             if (board.isEnemy(x + 1, y + 1, getColor())) {
                 positions.add(new Position(x + 1, y + 1));
+            }
+            if (board.isEnemy(x - 1, y + 1, getColor())) {
+                positions.add(new Position(x - 1, y + 1));
             }
         }
         return positions;
