@@ -1,5 +1,6 @@
 package lightchess.board;
 
+import jdk.nashorn.internal.runtime.Undefined;
 import lightchess.board.implemented.*;
 
 import java.awt.*;
@@ -97,12 +98,30 @@ public class Board {
         this.flip = flip;
     }
 
-    public void move(Position from, Position to) {
-
+    private boolean move(Position from, Position to) {
+        List<Position> positions = pieces[from.getY()][from.getX()].possibilities(this, from.getX(), from.getY());
+        to.flip();
+        System.out.println(from + " " + to + "  ->  " + positions);
+        if (positions.contains(to)) {
+            from.flip();
+            Piece p = pieces[from.getY()][from.getX()];
+            pieces[from.getY()][from.getX()] = new Piece(PieceColor.UNDEFINED);
+            pieces[to.getY()][to.getX()] = p;
+            return true;
+        }
+        return false;
     }
 
     public void click(Position click) {
+        if (click == null) {
+            return;
+        }
         Position.setFlip(flip);
+        if (this.click != null) {
+            if (move(this.click, click.copy())) {
+                return;
+            }
+        }
         if (pieces[click.getY()][click.getX()].getColor() == PieceColor.UNDEFINED) {
             this.click = null;
         }

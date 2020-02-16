@@ -44,6 +44,15 @@ public class Position {
         return y;
     }
 
+    public void flip() {
+        x = 7 - x;
+        y = 7 - y;
+    }
+
+    public Position copy() {
+        return new Position(x, y);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
