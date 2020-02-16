@@ -13,7 +13,7 @@ public class Fonts {
         g.setColor(c);
         g.setFont(f);
         FontMetrics fm = g.getFontMetrics(f);
-        int x = 400 - (fm.stringWidth(str) / 2);
+        int x = 500 - (fm.stringWidth(str) / 2);
         g.drawString(str, x, y);
     }
 }
