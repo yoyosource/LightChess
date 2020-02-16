@@ -67,6 +67,14 @@ public class OfflineStage implements Stage {
         if (MouseInput.wasReleased(1)) {
             int x = MouseInput.getX() - 350;
             int y = MouseInput.getY() - 30;
+            if (MouseInput.getX() < 350) {
+                board.click(null);
+                return;
+            }
+            if (MouseInput.getY() < 30) {
+                board.click(null);
+                return;
+            }
             x = x / 125;
             y = y / 125;
             try {
