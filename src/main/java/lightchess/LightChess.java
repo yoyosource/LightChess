@@ -4,10 +4,7 @@ import lightchess.render.Draw;
 import lightchess.render.Stage;
 import lightchess.resourceManager.LoadingQueue;
 import lightchess.resourceManager.ResourceManager;
-import lightchess.stages.CreditStage;
-import lightchess.stages.MenuStage;
-import lightchess.stages.OfflineStage;
-import lightchess.stages.OptionsStage;
+import lightchess.stages.*;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -108,6 +105,7 @@ public class LightChess {
         stages.add(new OptionsStage());
         stages.add(new OfflineStage());
         stages.add(new CreditStage());
+        stages.add(new ConnectStage());
     }
 
 }

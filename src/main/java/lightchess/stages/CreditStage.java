@@ -53,9 +53,6 @@ public class CreditStage implements Stage {
             if(currentSelection == 0){
                 LightChess.draw.setStage(0);
             }
-            if(currentSelection == 1){
-                OptionManager.setOption("limitfps", !OptionManager.getoption("limitfps"));
-            }
         }
     }
 
