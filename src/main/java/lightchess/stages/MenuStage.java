@@ -69,6 +69,8 @@ public class MenuStage implements Stage {
                 LightChess.draw.setStage(1);
             }else if( currentSelection == 0){
                 LightChess.draw.setStage(2);
+            }else if(currentSelection == 3){
+                LightChess.draw.setStage(3);
             }
 
         }
