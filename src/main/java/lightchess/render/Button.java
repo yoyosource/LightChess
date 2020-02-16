@@ -8,7 +8,7 @@ public class Button extends Rectangle {
     private Color color, selectedcolor;
     private boolean selected;
     private String text;
-    private int texty;
+    private int texty, textx;
 
     public Button(Font font, Font selectedfont, Color color, Color selectedcolor, String text, int y) {
         this.font = font;
@@ -18,6 +18,17 @@ public class Button extends Rectangle {
         this.selected = false;
         this.text = text;
         this.texty = y;
+        this.textx = -1;
+    }
+    public Button(Font font, Font selectedfont, Color color, Color selectedcolor, String text, int x, int y) {
+        this.font = font;
+        this.selectedfont = selectedfont;
+        this.color = color;
+        this.selectedcolor = selectedcolor;
+        this.selected = false;
+        this.text = text;
+        this.texty = y;
+        this.textx = x;
     }
 
     public void setSelected(boolean bool){
@@ -25,14 +36,27 @@ public class Button extends Rectangle {
     }
 
     public void render(Graphics2D g){
-        if(selected)
-            Fonts.string(g, selectedfont, selectedcolor, text, texty);
-        else
-            Fonts.string(g, font, color, text, texty);
-        FontMetrics fm = g.getFontMetrics();
-        this.x = 500 - fm.stringWidth(text) / 2;
-        this.y = texty - fm.getHeight();
-        this.width = fm.stringWidth(text);
-        this.height = fm.getHeight();
+        if(textx == -1){
+            if(selected)
+                Fonts.string(g, selectedfont, selectedcolor, text, texty);
+            else
+                Fonts.string(g, font, color, text, texty);
+            FontMetrics fm = g.getFontMetrics();
+            this.x = 500 - fm.stringWidth(text) / 2;
+            this.y = texty - fm.getHeight();
+            this.width = fm.stringWidth(text);
+            this.height = fm.getHeight();
+        }else{
+            if(selected)
+                Fonts.string(g, selectedfont, selectedcolor, text, textx, texty);
+            else
+                Fonts.string(g, font, color, text, textx, texty);
+            FontMetrics fm = g.getFontMetrics();
+            this.x = 500 - fm.stringWidth(text) / 2;
+            this.y = texty - fm.getHeight();
+            this.width = fm.stringWidth(text);
+            this.height = fm.getHeight();
+        }
+
     }
 }
