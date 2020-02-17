@@ -38,6 +38,8 @@ public class LightChess {
         loadingQueue.add("pieces/black/Rook.png", "BR", true);
         resourceManager.load(loadingQueue);
 
+        ConfigManager.createUUID();
+
         initStages();
 
         OptionManager.load();
