@@ -1,4 +1,4 @@
-package lightchess;
+package lightchess.utils;
 
 import java.util.HashMap;
 

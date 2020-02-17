@@ -3,9 +3,8 @@ package lightchess.stages;
 import lightchess.KeyInput;
 import lightchess.LightChess;
 import lightchess.MouseInput;
-import lightchess.OptionManager;
-import lightchess.render.BordRenderer;
 import lightchess.render.Button;
+import lightchess.utils.CheckIntersection;
 import lightchess.render.Stage;
 
 import java.awt.*;
@@ -40,7 +39,7 @@ public class CreditStage implements Stage {
         }
         boolean intersects = false;
         for (int i = 0; i < buttons.length; i++) {
-            if (buttons[i].intersects(new Rectangle(MouseInput.getX(), MouseInput.getY(), 1,1))) {
+            if (CheckIntersection.intersects(buttons[i], MouseInput.getX(), MouseInput.getY())) {
                 currentSelection = i;
                 intersects = true;
             }

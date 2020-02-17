@@ -2,9 +2,9 @@ package lightchess.stages;
 
 import lightchess.LightChess;
 import lightchess.MouseInput;
+import lightchess.render.*;
 import lightchess.render.Button;
-import lightchess.render.Fonts;
-import lightchess.render.Stage;
+import lightchess.utils.CheckIntersection;
 
 import java.awt.*;
 
@@ -17,6 +17,7 @@ public class MenuStage implements Stage {
 
     @Override
     public void render(Graphics2D g) {
+        CheckIntersection.g = g;
         g.setColor(Color.gray);
         g.fillRect(0,0,1400,1100);
         Fonts.string(g, new Font("Old English Text MT", Font.PLAIN, 100), new Color(255,103,0 , ani), "Light Chess", 150);
@@ -29,10 +30,11 @@ public class MenuStage implements Stage {
             }
             options[i].render(g);
         }
+        /*
         if(!LightChess.resourceManager.isLoading("WP")){
             g.drawImage(LightChess.resourceManager.getImage("WP"), 100, 100, null);
         }
-
+        */
     }
 
     @Override
@@ -52,7 +54,7 @@ public class MenuStage implements Stage {
         }
         boolean intersects = false;
         for (int i = 0; i < options.length; i++) {
-            if (options[i].intersects(new Rectangle(MouseInput.getX(), MouseInput.getY(), 1,1))) {
+            if (CheckIntersection.intersects(options[i], MouseInput.getX(), MouseInput.getY())) {
                 currentSelection = i;
                 intersects = true;
             }
@@ -62,7 +64,7 @@ public class MenuStage implements Stage {
             currentSelection = -1;
         }
         if (MouseInput.wasReleased(1)) {
-            System.out.println(currentSelection);
+            //System.out.println(currentSelection);
             if(currentSelection == 4){
                 System.exit(0);
             }else if( currentSelection == 2){
@@ -74,7 +76,6 @@ public class MenuStage implements Stage {
             }else if(currentSelection == 1){
                 LightChess.draw.setStage(4);
             }
-
         }
 
     }

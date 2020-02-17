@@ -5,8 +5,10 @@ import lightchess.render.Stage;
 import lightchess.resourceManager.LoadingQueue;
 import lightchess.resourceManager.ResourceManager;
 import lightchess.stages.*;
+import lightchess.utils.OptionManager;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +50,20 @@ public class LightChess {
         jFrame.setResizable(false);
         jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        jFrame.setSize(1400, 1100);
+        Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+        int width = 1400;
+        int height = 1100;
+        if (height > d.height) {
+            Draw.scale = ((double)d.height - 30) / height;
+            width = (int)(width * Draw.scale);
+            height = (int)(height * Draw.scale);
+        }
+        if (width > d.width) {
+            Draw.scale = (double)d.width / width;
+            width = (int)(width * Draw.scale);
+            height = (int)(height * Draw.scale);
+        }
+        jFrame.setSize(width, height);
         jFrame.setLocationRelativeTo(null);
 
         jFrame.setVisible(true);

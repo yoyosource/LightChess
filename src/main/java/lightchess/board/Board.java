@@ -17,10 +17,6 @@ public class Board {
 
     private String defaultBoard = "BR|BN|BB|BQ|BK|BB|BN|BR|BP|BP|BP|BP|BP|BP|BP|BP|||||||||||||||||||||||||||||||||WP|WP|WP|WP|WP|WP|WP|WP|WR|WN|WB|WQ|WK|WB|WN|WR|";
 
-    public static void main(String[] args) {
-        createBoard();
-    }
-
     private Board() {
         board(defaultBoard);
     }

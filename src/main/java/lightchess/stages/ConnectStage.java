@@ -3,11 +3,10 @@ package lightchess.stages;
 import lightchess.KeyInput;
 import lightchess.LightChess;
 import lightchess.MouseInput;
-import lightchess.OptionManager;
+import lightchess.render.*;
 import lightchess.render.Button;
-import lightchess.render.Fonts;
-import lightchess.render.Stage;
 import lightchess.render.TextField;
+import lightchess.utils.CheckIntersection;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -61,7 +60,7 @@ public class ConnectStage implements Stage {
         }
         boolean intersects = false;
         for (int i = 0; i < buttons.length; i++) {
-            if (buttons[i].intersects(new Rectangle(MouseInput.getX(), MouseInput.getY(), 1,1))) {
+            if (CheckIntersection.intersects(buttons[i], MouseInput.getX(), MouseInput.getY())) {
                 currentSelection = i;
                 intersects = true;
             }
@@ -78,7 +77,7 @@ public class ConnectStage implements Stage {
                 LightChess.draw.setStage(0);
             }
             for (int i = 0; i < texts.length; i++) {
-                if (texts[i].intersects(new Rectangle(MouseInput.getX(), MouseInput.getY(), 1,1))) {
+                if (CheckIntersection.intersects(texts[i], MouseInput.getX(), MouseInput.getY())) {
                     textfield = i;
                     if(!wasselected[i]){
                         texts[i].setText("");

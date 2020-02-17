@@ -8,6 +8,8 @@ import java.awt.image.BufferStrategy;
 
 public class Draw extends Canvas {
 
+    public static double scale = 0.8;
+
     private Stage currstage;
 
     public Draw(){
@@ -32,6 +34,7 @@ public class Draw extends Canvas {
         }
 
         Graphics2D g = (Graphics2D) bs.getDrawGraphics();
+        g.scale(scale, scale);
 
         currstage.render(g);
 

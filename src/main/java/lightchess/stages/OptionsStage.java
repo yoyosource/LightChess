@@ -3,8 +3,9 @@ package lightchess.stages;
 import lightchess.KeyInput;
 import lightchess.LightChess;
 import lightchess.MouseInput;
-import lightchess.OptionManager;
+import lightchess.utils.OptionManager;
 import lightchess.render.Button;
+import lightchess.utils.CheckIntersection;
 import lightchess.render.Fonts;
 import lightchess.render.Stage;
 
@@ -45,7 +46,7 @@ public class OptionsStage implements Stage {
         }
         boolean intersects = false;
         for (int i = 0; i < buttons.length; i++) {
-            if (buttons[i].intersects(new Rectangle(MouseInput.getX(), MouseInput.getY(), 1,1))) {
+            if (CheckIntersection.intersects(buttons[i], MouseInput.getX(), MouseInput.getY())) {
                 currentSelection = i;
                 intersects = true;
             }
@@ -55,14 +56,12 @@ public class OptionsStage implements Stage {
             currentSelection = -1;
         }
         if (MouseInput.wasReleased(1)) {
-            System.out.println(currentSelection);
             if(currentSelection == 0){
                 LightChess.draw.setStage(0);
             }
-            if(currentSelection == 1){
+            if (currentSelection == 1) {
                 OptionManager.setOption("limitfps", !OptionManager.getoption("limitfps"));
             }
-
         }
     }
 

@@ -1,17 +1,14 @@
 package lightchess.stages;
 
-import lightchess.KeyInput;
 import lightchess.LightChess;
 import lightchess.MouseInput;
-import lightchess.OptionManager;
 import lightchess.board.Board;
 import lightchess.board.Position;
-import lightchess.render.BordRenderer;
+import lightchess.render.*;
 import lightchess.render.Button;
-import lightchess.render.Stage;
+import lightchess.utils.CheckIntersection;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 
 public class OfflineStage implements Stage {
 
@@ -46,7 +43,7 @@ public class OfflineStage implements Stage {
 
         boolean intersects = false;
         for (int i = 0; i < buttons.length; i++) {
-            if (buttons[i].intersects(new Rectangle(MouseInput.getX(), MouseInput.getY(), 1,1))) {
+            if (CheckIntersection.intersects(buttons[i], MouseInput.getX(), MouseInput.getY())) {
                 currentSelection = i;
                 intersects = true;
             }
@@ -59,24 +56,24 @@ public class OfflineStage implements Stage {
             if(currentSelection == 0){
                 LightChess.draw.setStage(0);
             }
-            if(currentSelection == 1){
-                OptionManager.setOption("limitfps", !OptionManager.getoption("limitfps"));
-            }
         }
 
         if (MouseInput.wasReleased(1)) {
-            int x = MouseInput.getX() - 350;
-            int y = MouseInput.getY() - 30;
-            if (MouseInput.getX() < 350) {
+            int scaled350 = (int)(350 * Draw.scale);
+            int scaled125 = (int)(125 * Draw.scale);
+            int scaled30 = (int)(30 * Draw.scale);
+            int x = MouseInput.getX() - scaled350;
+            int y = MouseInput.getY() - scaled30;
+            if (MouseInput.getX() < scaled350) {
                 board.click(null);
                 return;
             }
-            if (MouseInput.getY() < 30) {
+            if (MouseInput.getY() < scaled30) {
                 board.click(null);
                 return;
             }
-            x = x / 125;
-            y = y / 125;
+            x = x / scaled125;
+            y = y / scaled125;
             try {
                 Position position = new Position(x, y);
                 board.click(position);
