@@ -8,7 +8,7 @@ import java.awt.image.BufferStrategy;
 
 public class Draw extends Canvas {
 
-    public static double scale = 0.8;
+    public static double scale = 1;
 
     private Stage currstage;
 

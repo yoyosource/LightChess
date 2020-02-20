@@ -1,5 +1,6 @@
 package lightchess;
 
+import lightchess.config.ConfigManager;
 import lightchess.render.Draw;
 import lightchess.render.Stage;
 import lightchess.resourceManager.LoadingQueue;
