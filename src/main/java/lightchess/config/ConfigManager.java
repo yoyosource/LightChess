@@ -1,11 +1,15 @@
 package lightchess.config;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
@@ -15,10 +19,13 @@ public class ConfigManager {
         return System.getProperty("user.home") + "/lightchess";
     }
     private static String getDesignDir() {
-        return getConfigDir() + "/designs";
+        return getConfigDir() + "/themes";
     }
     private static String getGamesDir() {
         return getConfigDir() + "/games";
+    }
+    private static String getTempDir() {
+        return getConfigDir() + "/.cache";
     }
 
     private static String getConfig() {
@@ -37,6 +44,10 @@ public class ConfigManager {
         File games = new File(getGamesDir());
         if (!games.exists()) {
             games.mkdir();
+        }
+        File temp = new File(getTempDir());
+        if (!temp.exists()) {
+            temp.mkdir();
         }
 
         File config = new File(getConfig());
@@ -57,6 +68,9 @@ public class ConfigManager {
 
             }
         }
+
+        List<Theme> themes = getThemes();
+        System.out.println(themes);
     }
 
     public static List<Theme> getThemes() {
@@ -75,13 +89,99 @@ public class ConfigManager {
 
         List<Theme> themes = new ArrayList<>();
         for (File f : files) {
-            Theme t = new Theme(f.getName(), f);
-            if (!t.valid()) {
-                continue;
+            File t;
+            if (f.getName().endsWith(".zip")) {
+                t = unzipFile(f);
+            } else {
+                t = f;
             }
-            themes.add(t);
+            Theme theme = new Theme(t.getName(), t);
+            if (theme.valid() && !themes.contains(theme)) {
+                themes.add(theme);
+            }
         }
         return themes;
+    }
+
+    private static File unzipFile(File f) {
+        String name = f.getName();
+        File uf = new File(getTempDir() + "/" + name.substring(0, name.lastIndexOf('.')));
+
+        if (f.lastModified() > uf.lastModified()) {
+
+        }
+        deleteDirectory(uf);
+        unzip(f.getPath(), getTempDir());
+        return uf;
+    }
+
+    private static void deleteDirectory(File file) {
+        if (!file.exists()) {
+            return;
+        }
+        if (file.isFile()) {
+            return;
+        }
+        File[] files = file.listFiles();
+        if (files == null) {
+            return;
+        }
+        if (files.length == 0) {
+            file.delete();
+            return;
+        }
+
+        List<File> fileList = new ArrayList<>();
+        fileList.addAll(Arrays.stream(files).collect(Collectors.toList()));
+        while (!fileList.isEmpty()) {
+            File f = fileList.remove(0);
+            if (!f.exists()) {
+                continue;
+            }
+            if (f.isFile() && !f.delete()) {
+                fileList.add(f);
+            } else {
+                File[] dir = f.listFiles();
+                if (dir == null) {
+                    continue;
+                }
+                if (dir.length == 0) {
+                    f.delete();
+                    continue;
+                }
+                fileList.addAll(Arrays.stream(dir).collect(Collectors.toList()));
+            }
+        }
+    }
+
+    private static void unzip(String zipFilePath, String destDir) {
+        if (!new File(destDir).exists()) new File(destDir).mkdirs();
+        byte[] buffer = new byte[1024];
+        try (ZipInputStream inputStream = new ZipInputStream(new FileInputStream(new File(zipFilePath)))) {
+            ZipEntry zipEntry = null;
+            do {
+                zipEntry = inputStream.getNextEntry();
+                if (zipEntry == null) {
+                    continue;
+                }
+
+                String fileName = zipEntry.getName();
+                File newFile = new File(destDir + File.separator + fileName);
+                if (zipEntry.isDirectory()) {
+                    newFile.mkdirs();
+                } else {
+                    FileOutputStream fos = new FileOutputStream(newFile);
+                    int len;
+                    while ((len = inputStream.read(buffer)) > 0) {
+                        fos.write(buffer, 0, len);
+                    }
+                    fos.close();
+                    inputStream.closeEntry();
+                }
+            } while (zipEntry != null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
