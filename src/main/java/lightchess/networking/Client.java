@@ -12,9 +12,11 @@ public class Client {
     public Client(){
 
     }
+
     public boolean connect(String ip, int port) {
         try {
             s = new Socket(ip, port);
+            System.out.println("Client Connected!");
             LightChess.draw.setStage(5);
             return true;
         } catch (IOException e) {
