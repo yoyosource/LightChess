@@ -3,13 +3,18 @@ package lightchess.stages;
 import lightchess.KeyInput;
 import lightchess.LightChess;
 import lightchess.MouseInput;
-import lightchess.render.*;
+import lightchess.networking.Client;
+import lightchess.networking.Server;
 import lightchess.render.Button;
+import lightchess.render.Fonts;
+import lightchess.render.Stage;
 import lightchess.render.TextField;
 import lightchess.utils.CheckIntersection;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 public class ConnectStage implements Stage {
 
@@ -18,6 +23,8 @@ public class ConnectStage implements Stage {
     private TextField[] texts = new TextField[3];
     private int textfield = -1;
     private boolean[] wasselected = {false, false, false};
+    Server s = null;
+    Client c = null;
 
     @Override
     public void render(Graphics2D g) {
@@ -50,6 +57,21 @@ public class ConnectStage implements Stage {
             }
             texts[i].render(g);
         }
+        if(s != null){
+            try {
+                InetAddress add = InetAddress.getLocalHost();
+                Fonts.string(g, new Font("Old English Text MT", Font.PLAIN, 100), Color.BLACK, add.getHostAddress(), 600);
+                Thread t = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        s.waitForClient();
+                    }
+                });
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            }
+
+        }
 
     }
 
@@ -75,6 +97,13 @@ public class ConnectStage implements Stage {
         if (MouseInput.wasPressed(1)) {
             if (currentSelection == 0) {
                 LightChess.draw.setStage(0);
+            }
+            if(currentSelection == 2){
+                s = new Server(4999, texts[2].getText());
+            }
+            if(currentSelection == 1){
+                c = new Client();
+                c.connect(texts[1].getText(), 4999);
             }
             for (int i = 0; i < texts.length; i++) {
                 if (CheckIntersection.intersects(texts[i], MouseInput.getX(), MouseInput.getY())) {
