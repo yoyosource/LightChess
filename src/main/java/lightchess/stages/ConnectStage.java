@@ -113,10 +113,10 @@ public class ConnectStage implements Stage {
                     LightChess.draw.setStage(0);
                 }
                 if(currentSelection == 2){
-                    s = new Server(4999, texts[2].getText());
+                    s = new Server(443, texts[2].getText());
                 }
                 if(currentSelection == 1){
-                    c = new Client(texts[1].getText(), 4999);
+                    c = new Client(texts[1].getText(), 443);
                 }
                 for (int i = 0; i < texts.length; i++) {
                     if (CheckIntersection.intersects(texts[i], MouseInput.getX(), MouseInput.getY())) {
