@@ -13,7 +13,12 @@ import lightchess.utils.CheckIntersection;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.net.URL;
 import java.net.UnknownHostException;
 
 public class ConnectStage implements Stage {
@@ -59,21 +64,25 @@ public class ConnectStage implements Stage {
             texts[i].render(g);
         }
         if(s != null){
-            try {
-                g.setColor(Color.GRAY);
-                g.fillRect(0,0,1400,1100);
-                InetAddress add = InetAddress.getLocalHost();
-                Fonts.string(g, new Font("Old English Text MT", Font.PLAIN, 100), Color.BLACK, add.getHostAddress(), 600);
-                String str = "";
-                for (int i = 0; i < currentpoints; i += 60) {
-                    if(i > 1){
-                        str += ".";
-                    }
+            g.setColor(Color.GRAY);
+            g.fillRect(0,0,1400,1100);
+            String str = "";
+            for (int i = 0; i < currentpoints; i += 60) {
+                if(i > 1){
+                    str += ".";
+                }
+            }
+            String systemipaddress = "";
+                try {
+                    URL whatismyip = new URL("http://checkip.amazonaws.com");
+                    BufferedReader in = new BufferedReader(new InputStreamReader(
+                            whatismyip.openStream()));
+                    String ip = in.readLine(); //you get the IP as a String
+                    Fonts.string(g, new Font("Old English Text MT", Font.PLAIN, 100), Color.BLACK, ip, 600);
+                } catch (IOException e) {
+                    Fonts.string(g, new Font("Old English Text MT", Font.PLAIN, 100), Color.BLACK, "Connection Error!", 600);
                 }
                 Fonts.string(g, new Font("Old English Text MT", Font.PLAIN, 100), Color.BLACK, "Waiting for Client" + str, 287, 400);
-            } catch (UnknownHostException e) {
-                e.printStackTrace();
-            }
 
         }
 
