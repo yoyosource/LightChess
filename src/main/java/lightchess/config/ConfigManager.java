@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
 public class ConfigManager {
@@ -24,7 +23,7 @@ public class ConfigManager {
     private static String getGamesDir() {
         return getConfigDir() + "/games";
     }
-    private static String getTempDir() {
+    private static String getCacheDir() {
         return getConfigDir() + "/.cache";
     }
 
@@ -45,7 +44,7 @@ public class ConfigManager {
         if (!games.exists()) {
             games.mkdir();
         }
-        File temp = new File(getTempDir());
+        File temp = new File(getCacheDir());
         if (!temp.exists()) {
             temp.mkdir();
         }
@@ -105,17 +104,20 @@ public class ConfigManager {
 
     private static File unzipFile(File f) {
         String name = f.getName();
-        File uf = new File(getTempDir() + "/" + name.substring(0, name.lastIndexOf('.')));
+        File uf = new File(getCacheDir() + "/" + name.substring(0, name.lastIndexOf('.')));
 
         if (f.lastModified() > uf.lastModified()) {
 
         }
         deleteDirectory(uf);
-        unzip(f.getPath(), getTempDir());
+        unzip(f.getPath(), getCacheDir());
         return uf;
     }
 
     private static void deleteDirectory(File file) {
+        if (!file.getPath().startsWith(getCacheDir())) {
+            return;
+        }
         if (!file.exists()) {
             return;
         }
@@ -132,7 +134,7 @@ public class ConfigManager {
         }
 
         List<File> fileList = new ArrayList<>();
-        fileList.addAll(Arrays.stream(files).collect(Collectors.toList()));
+        fileList.add(file);
         while (!fileList.isEmpty()) {
             File f = fileList.remove(0);
             if (!f.exists()) {
@@ -150,6 +152,7 @@ public class ConfigManager {
                     continue;
                 }
                 fileList.addAll(Arrays.stream(dir).collect(Collectors.toList()));
+                fileList.add(f);
             }
         }
     }
