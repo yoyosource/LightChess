@@ -71,12 +71,6 @@ public class ConnectStage implements Stage {
                     }
                 }
                 Fonts.string(g, new Font("Old English Text MT", Font.PLAIN, 100), Color.BLACK, "Waiting for Client" + str, 287, 400);
-                Thread t = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        s.waitForClient();
-                    }
-                }, "Network-Waiter");
             } catch (UnknownHostException e) {
                 e.printStackTrace();
             }
@@ -113,8 +107,7 @@ public class ConnectStage implements Stage {
                     s = new Server(4999, texts[2].getText());
                 }
                 if(currentSelection == 1){
-                    c = new Client();
-                    c.connect(texts[1].getText(), 4999);
+                    c = new Client(texts[1].getText(), 4999);
                 }
                 for (int i = 0; i < texts.length; i++) {
                     if (CheckIntersection.intersects(texts[i], MouseInput.getX(), MouseInput.getY())) {
