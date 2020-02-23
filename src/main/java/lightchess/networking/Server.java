@@ -29,6 +29,7 @@ public class Server {
                     if (clients.isEmpty()) {
                         client.setPlayer();
                     }
+                    System.out.println("Accepted Client");
                     clients.add(client);
                 } catch (IOException e) {
 
