@@ -1,37 +1,48 @@
 package lightchess.networking;
 
-import lightchess.LightChess;
-
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Server {
 
-    ServerSocket ss;
-    Socket connection;
-    String name;
+    private ServerSocket serverSocket;
+    private String name;
 
-    public Server(int port, String name){
+    private List<Client> clients = new ArrayList<>();
+
+    private boolean running = true;
+
+    public Server(int port, String name) {
         this.name = name;
         try {
-            ss = new ServerSocket(port);
+            serverSocket = new ServerSocket(port);
         } catch (IOException e) {
-            e.printStackTrace();
+
         }
+
+        Runnable runnable = () -> {
+            while (running) {
+                try {
+                    Client client = new Client(serverSocket.accept());
+                    if (clients.isEmpty()) {
+                        client.setPlayer();
+                    }
+                    clients.add(client);
+                } catch (IOException e) {
+
+                }
+            }
+        };
+        Thread thread = new Thread(runnable);
+        thread.start();
     }
 
-    public ServerSocket getSs() {
-        return ss;
-    }
-
-    public boolean waitForClient(){
-        try {
-            ss.accept();
-            LightChess.draw.setStage(5);
-            return true;
-        } catch (IOException e) {
-            return false;
+    public void close() {
+        for (int i = 0; i < clients.size(); i++) {
+            clients.get(i).close();
         }
+        running = false;
     }
 }

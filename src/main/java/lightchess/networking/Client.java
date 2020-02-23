@@ -1,26 +1,72 @@
 package lightchess.networking;
 
-import lightchess.LightChess;
-
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 public class Client {
 
-    Socket s;
+    private PrintWriter output;
+    private BufferedReader input;
 
-    public Client(){
+    private boolean running = true;
 
-    }
+    private boolean player = false;
 
-    public boolean connect(String ip, int port) {
+    public Client(String ip, int port) {
         try {
-            s = new Socket(ip, port);
-            System.out.println("Client Connected!");
-            LightChess.draw.setStage(5);
-            return true;
+            connect(new Socket(ip, port));
         } catch (IOException e) {
-            return false;
+
         }
     }
+
+    Client(Socket socket) {
+        connect(socket);
+    }
+
+    private void connect(Socket socket) {
+        try {
+            output = new PrintWriter(socket.getOutputStream(), true);
+            input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        } catch (IOException e) {
+            return;
+        }
+
+        Runnable runnable = () -> {
+            while (running) {
+                try {
+                    String s = input.readLine();
+                    if (s == null) {
+                        continue;
+                    }
+                    if (s.equals("CLOSE")) {
+                        close();
+                        break;
+                    }
+                    System.out.println(s);
+                } catch (IOException e) {
+
+                }
+            }
+        };
+        Thread thread = new Thread(runnable);
+        thread.start();
+    }
+
+    public void send(String s) {
+        output.println(s);
+    }
+
+    public void close() {
+        send("CLOSE");
+        running = false;
+    }
+
+    public void setPlayer() {
+        player = true;
+    }
+
 }
